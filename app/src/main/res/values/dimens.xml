@@ -12,7 +12,11 @@
     <dimen name="ProvidingDate">150dp</dimen>
     <dimen name="Type">80dp</dimen>
     <dimen name="showBtn">30dp</dimen>
+    <dimen name="actionBtn">40dp</dimen>
     <dimen name="Action">120dp</dimen>
     <dimen name="statusPadding">7dp</dimen>
+    <dimen name="headerPadding">10dp</dimen>
+    <dimen name="itemPadding">10dp</dimen>
     <dimen name="action_button">30dp</dimen>
+    <dimen name="paddingStart">5dp</dimen>
 </resources>

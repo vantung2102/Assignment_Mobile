@@ -210,11 +210,11 @@ public class JobTitleFragment extends Fragment {
                                 ((HomeActivity)getActivity()).showToast(true,"Create Jobtitle success!");
                             }
                             else {
-                                Log.d("RETROFIT_ERROR :", String.valueOf(res.code()));
-                                JSONObject jsonObject = null;
-                                jsonObject = new JSONObject(res.errorBody().string());
-                                JSONArray jsonArray=jsonObject.getJSONArray("errors");
-                                Log.d("RETROFIT_ERROR_detail :", String.valueOf(jsonArray.getJSONObject(0).get("detail")));
+//                                Log.d("RETROFIT_ERROR :", String.valueOf(res.code()));
+//                                JSONObject jsonObject = null;
+//                                jsonObject = new JSONObject(res.errorBody().string());
+//                                JSONArray jsonArray=jsonObject.getJSONArray("errors");
+//                                Log.d("RETROFIT_ERROR_detail :", String.valueOf(jsonArray.getJSONObject(0).get("detail")));
                                 //Toast.makeText(getContext(), String.valueOf(jsonArray.getJSONObject(0).get("detail")), Toast.LENGTH_SHORT).show();
                                 alertDialog.dismiss();
                                 ((HomeActivity)getActivity()).showToast(false,"Create Jobtitle failed!");

@@ -201,11 +201,11 @@ public class PositionFragment extends Fragment {
                                 ((HomeActivity)getActivity()).showToast(true,"Create Position success!");
                             }
                             else {
-                                Log.d("RETROFIT_ERROR :", String.valueOf(res.code()));
-                                JSONObject jsonObject = null;
-                                jsonObject = new JSONObject(res.errorBody().string());
-                                JSONArray jsonArray=jsonObject.getJSONArray("errors");
-                                Log.d("RETROFIT_ERROR_detail :", String.valueOf(jsonArray.getJSONObject(0).get("detail")));
+//                                Log.d("RETROFIT_ERROR :", String.valueOf(res.code()));
+//                                JSONObject jsonObject = null;
+//                                jsonObject = new JSONObject(res.errorBody().string());
+//                                JSONArray jsonArray=jsonObject.getJSONArray("errors");
+//                                Log.d("RETROFIT_ERROR_detail :", String.valueOf(jsonArray.getJSONObject(0).get("detail")));
                                 //Toast.makeText(getContext(), String.valueOf(jsonArray.getJSONObject(0).get("detail")), Toast.LENGTH_SHORT).show();
                                 ((HomeActivity)getActivity()).showToast(false,"Create Position failed!");
                             }

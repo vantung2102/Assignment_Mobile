@@ -42,25 +42,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         >
-        <ImageButton
-            android:layout_centerVertical="true"
-            android:src="@drawable/edit_mini"
-            android:id="@+id/btn_show"
-            android:textSize="@dimen/miniText"
-            android:textColor="@color/black"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            ></ImageButton>
-        <ImageButton
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:id="@+id/btn_delete"
-            android:textSize="@dimen/miniText"
-            android:textColor="@color/black"
-            android:src="@drawable/deletetrash"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            ></ImageButton>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/edit"
+                android:id="@+id/btn_show"
+                android:textColor="@color/black"
+                android:layout_width="@dimen/actionBtn"
+                android:layout_height="@dimen/actionBtn"
+                ></ImageView>
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:id="@+id/btn_delete"
+                android:textSize="@dimen/miniText"
+                android:textColor="@color/black"
+                android:src="@drawable/deletetrash"
+                android:layout_width="@dimen/actionBtn"
+                android:layout_height="@dimen/actionBtn"
+                ></ImageView>
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

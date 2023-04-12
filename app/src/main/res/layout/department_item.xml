@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_weight="10"
-    android:padding="5dp">
+    android:paddingLeft="@dimen/paddingStart"
+    android:paddingRight="@dimen/paddingStart"
+    android:paddingTop="@dimen/itemPadding"
+    android:paddingBottom="@dimen/itemPadding">
     <LinearLayout
         android:layout_gravity="center_vertical"
         android:layout_width="0dp"
@@ -28,8 +31,6 @@
     <TextView
         android:textColor="@color/black"
         android:textSize="@dimen/nomarlText"
-        android:layout_marginLeft="20dp"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/txt_stt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

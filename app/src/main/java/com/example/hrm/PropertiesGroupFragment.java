@@ -57,7 +57,7 @@ public class PropertiesGroupFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public  static final String MY_TAG= "DepartmentFragment";
+    public  static final String MY_TAG= "PropertiesGroupFragment";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -262,12 +262,12 @@ public class PropertiesGroupFragment extends Fragment {
                                 ((HomeActivity)getActivity()).showToast(true,"Create Group Property Success!");
                             }
                             else {
-                                Log.d("RETROFIT_ERROR :", String.valueOf(res.code()));
-                                JSONObject jsonObject = null;
-                                jsonObject = new JSONObject(res.errorBody().string());
-                                JSONArray jsonArray=jsonObject.getJSONArray("errors");
-                                Log.d("RETROFIT_ERROR_detail :", String.valueOf(jsonArray.getJSONObject(0).get("detail")));
-                                Toast.makeText(getContext(), String.valueOf(jsonArray.getJSONObject(0).get("detail")), Toast.LENGTH_SHORT).show();
+//                                Log.d("RETROFIT_ERROR :", String.valueOf(res.code()));
+//                                JSONObject jsonObject = null;
+//                                jsonObject = new JSONObject(res.errorBody().string());
+//                                JSONArray jsonArray=jsonObject.getJSONArray("errors");
+//                                Log.d("RETROFIT_ERROR_detail :", String.valueOf(jsonArray.getJSONObject(0).get("detail")));
+//                                Toast.makeText(getContext(), String.valueOf(jsonArray.getJSONObject(0).get("detail")), Toast.LENGTH_SHORT).show();
                                 ((HomeActivity)getActivity()).showToast(true,"Create Group Property Failed!");
                             }
                         } catch (IOException e) {

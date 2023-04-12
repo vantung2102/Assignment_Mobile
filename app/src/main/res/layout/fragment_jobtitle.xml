@@ -40,53 +40,64 @@
             android:layout_height="wrap_content"
             >
             <LinearLayout
-                android:padding="10dp"
+                android:paddingLeft="@dimen/paddingStart"
+                android:paddingRight="@dimen/paddingStart"
+                android:paddingBottom="@dimen/headerPadding"
+                android:paddingTop="@dimen/headerPadding"
                 android:background="@color/blue"
-                android:id="@+id/ln_stt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
+                android:id="@+id/ln_stt"
+                >
                 <LinearLayout
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:textSize="@dimen/nomarlText"
-                        android:textColor="@color/white"
-                        android:layout_alignParentTop="true"
-                        android:id="@+id/txt_stt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="STT"></TextView></LinearLayout>
-                <LinearLayout
-                    android:layout_weight="5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <TextView
 
-                        android:textSize="@dimen/nomarlText"
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
 
-                        android:layout_weight="4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/txt_departmentName"
-                        android:text="@string/jobTitle"></TextView></LinearLayout>
-                <LinearLayout
-                    android:layout_weight="3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:textSize="@dimen/nomarlText"
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Action"></TextView>
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+                    <LinearLayout
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/nomarlText"
+                            android:textColor="@color/white"
+                            android:layout_alignParentTop="true"
+                            android:id="@+id/txt_stt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="STT"></TextView></LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+
+                            android:textSize="@dimen/nomarlText"
+                            android:textColor="@color/white"
+
+                            android:layout_weight="4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txt_departmentName"
+                            android:text="@string/jobTitle"></TextView></LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/nomarlText"
+                            android:textColor="@color/white"
+                            android:textAlignment="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Action"></TextView>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_below="@id/ln_stt"
                 android:layout_width="match_parent"

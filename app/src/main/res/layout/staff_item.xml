@@ -5,7 +5,10 @@
     android:orientation="horizontal"
     android:weightSum="10"
     android:id="@+id/layout"
-    android:layout_marginBottom="10dp"
+    android:paddingLeft="@dimen/paddingStart"
+    android:paddingRight="@dimen/paddingStart"
+    android:paddingTop="@dimen/itemPadding"
+    android:paddingBottom="@dimen/itemPadding"
     >
     <TextView
         android:textSize="@dimen/nomarlText"
@@ -16,7 +19,6 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:id="@+id/txt_index"
-        android:textAlignment="center"
         android:text="1"></TextView>
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_gravity="center_vertical"
@@ -30,7 +32,6 @@
     <LinearLayout
         android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/img_avar"
         android:layout_width="0dp"
         android:layout_weight="3"
@@ -39,7 +40,6 @@
         <TextView
             android:textSize="@dimen/nomarlText"
             android:textColor="@color/black"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,6 @@
         <TextView
             android:textSize="@dimen/nomarlText"
             android:textColor="@color/black"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/txt_sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,23 +63,23 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
-            <Button
+            <ImageView
                 android:id="@+id/btn_edit"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/btn_show"
-                android:background="@color/design_default_color_surface"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:text="EDIT"></Button>
-            <Button
+                android:src="@drawable/edit"
+                android:layout_width="@dimen/actionBtn"
+                android:layout_height="@dimen/actionBtn"
+                android:text="EDIT"></ImageView>
+            <ImageView
                 android:layout_marginLeft="20dp"
                 android:id="@+id/btn_show"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:background="@color/design_default_color_surface"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:text="SHOW"></Button>
+                android:src="@drawable/eye"
+                android:layout_width="@dimen/actionBtn"
+                android:layout_height="@dimen/actionBtn"
+                android:text="SHOW"></ImageView>
         </LinearLayout>
 
     </RelativeLayout>
