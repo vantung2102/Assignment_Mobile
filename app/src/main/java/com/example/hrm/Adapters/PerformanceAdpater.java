@@ -1,14 +1,12 @@
 package com.example.hrm.Adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hrm.HomeActivity;
-import com.example.hrm.R;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.Response.PerformanceAttributes;
 import com.example.hrm.databinding.PerformanceItemBinding;
 

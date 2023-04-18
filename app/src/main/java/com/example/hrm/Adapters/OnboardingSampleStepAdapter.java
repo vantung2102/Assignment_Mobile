@@ -9,17 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hrm.HomeActivity;
-import com.example.hrm.OnboardingSampleFragment;
-import com.example.hrm.Response.LeaveApplicationAttributes;
-import com.example.hrm.Response.OnboardingByStaffAttributes;
+import com.example.hrm.Fragments.Home.HomeActivity;
+import com.example.hrm.Fragments.Onboarding.OnboardingSampleFragment;
 import com.example.hrm.Response.OnboardingSampleStepAtrributes;
-import com.example.hrm.Response.StaffLeaveAttributes;
-import com.example.hrm.StaffTimeOffFragment;
 import com.example.hrm.databinding.ItemLoadBinding;
-import com.example.hrm.databinding.LeaveApplicationItemBinding;
-import com.example.hrm.databinding.LeaveItemBinding;
-import com.example.hrm.databinding.OnboardingItemBinding;
 import com.example.hrm.databinding.OnboardingSampleItemBinding;
 
 import java.util.List;

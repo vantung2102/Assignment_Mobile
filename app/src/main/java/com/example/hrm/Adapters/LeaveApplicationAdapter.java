@@ -16,17 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hrm.Common;
-import com.example.hrm.DetailLeaveApplicationFragment;
-import com.example.hrm.HomeActivity;
+import com.example.hrm.Fragments.LeaveApplication.DetailLeaveApplicationFragment;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
-import com.example.hrm.Response.Attributes;
 import com.example.hrm.Response.LeaveApplicationAttributes;
-import com.example.hrm.Response.StaffLeaveAttributes;
 import com.example.hrm.Services.APIService;
-import com.example.hrm.StaffTimeOffFragment;
 import com.example.hrm.databinding.ItemLoadBinding;
 import com.example.hrm.databinding.LeaveApplicationItemBinding;
-import com.example.hrm.databinding.LeaveItemBinding;
 
 import java.util.List;
 

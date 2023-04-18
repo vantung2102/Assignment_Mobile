@@ -8,12 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hrm.HomeActivity;
-import com.example.hrm.NewEmployeeFragment;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.Response.PerformanceAttributes;
-import com.example.hrm.SelfPreviewDetail;
-import com.example.hrm.StaffTimeOffFragment;
-import com.example.hrm.databinding.PerformanceItemBinding;
+import com.example.hrm.Fragments.Performance.SelfPreviewDetail;
 import com.example.hrm.databinding.SelfPreviewInProgressItemBinding;
 
 import java.util.List;

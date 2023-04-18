@@ -1,9 +1,6 @@
 package com.example.hrm.viewmodel;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-
-import com.example.hrm.OnboardingSampleFragment;
+import com.example.hrm.Fragments.Onboarding.OnboardingSampleFragment;
 
 public class AddOnboardingTaskViewModel{
     private String position;

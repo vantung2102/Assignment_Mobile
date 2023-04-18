@@ -3,7 +3,6 @@ package com.example.hrm.Adapters;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,21 +13,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hrm.Common;
 import com.example.hrm.R;
-import com.example.hrm.Response.Attributes;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.OnboardingByStaffAttributes;
-import com.example.hrm.Response.StaffAttributes;
-import com.example.hrm.StaffOnboardingFragment;
-import com.example.hrm.databinding.FragmentStaffOnboardingBinding;
 import com.example.hrm.databinding.OnboardingItemBinding;
 
 import java.text.ParseException;

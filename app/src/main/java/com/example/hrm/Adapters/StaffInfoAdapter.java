@@ -4,12 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.hrm.Response.Staff;
 import com.example.hrm.Response.StaffAttributes;
-import com.example.hrm.StaffInfoFragment;
-import com.example.hrm.StaffOnboardingFragment;
-import com.example.hrm.StaffProfileFragment;
-import com.example.hrm.StaffTimeOffFragment;
+import com.example.hrm.Fragments.Staff.StaffInfoFragment;
+import com.example.hrm.Fragments.Staff.StaffOnboardingFragment;
+import com.example.hrm.Fragments.Staff.StaffProfileFragment;
+import com.example.hrm.Fragments.Staff.StaffTimeOffFragment;
 
 public class StaffInfoAdapter extends FragmentStateAdapter {
     public StaffInfoAdapter(@NonNull Fragment fragment) {

@@ -6,26 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hrm.Constant;
-import com.example.hrm.HomeActivity;
-import com.example.hrm.NewEmployeeFragment;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
 import com.example.hrm.Response.Attributes;
-import com.example.hrm.Response.Datum;
 import com.example.hrm.Response.DatumStaff;
 import com.example.hrm.Response.StaffAttributes;
-import com.example.hrm.StaffFragment;
-import com.example.hrm.StaffFragmentView;
-import com.example.hrm.StaffInfoFragment;
-import com.example.hrm.databinding.DepartmentItemBinding;
+import com.example.hrm.Fragments.Staff.StaffFragmentView;
+import com.example.hrm.Fragments.Staff.StaffInfoFragment;
 import com.example.hrm.databinding.StaffItemBinding;
 
 import java.util.ArrayList;

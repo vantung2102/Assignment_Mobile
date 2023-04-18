@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".Fragments.Login.LoginActivity"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@color/gray"
@@ -75,6 +75,7 @@
             android:textSize="@dimen/nomarlText"
             ></TextView>
         <EditText
+            android:drawableEnd="@drawable/hide"
             android:id="@+id/txt_password"
             android:inputType="textPassword"
             android:layout_marginTop="5dp"

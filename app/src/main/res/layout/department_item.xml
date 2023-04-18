@@ -49,15 +49,15 @@
             <Button
                 android:layout_marginRight="20dp"
                 android:id="@+id/btn_edit"
-                android:layout_width="30dp"
+                android:layout_width="@dimen/actionBtn"
                 android:background="@drawable/edit"
-                android:layout_height="30dp"></Button>
+                android:layout_height="@dimen/actionBtn"></Button>
             <Button
                 android:layout_alignParentRight="true"
                 android:id="@+id/btn_delete"
-                android:layout_width="30dp"
+                android:layout_width="@dimen/actionBtn"
                 android:background="@drawable/deletetrash"
-                android:layout_height="30dp"></Button>
+                android:layout_height="@dimen/actionBtn"></Button>
         </LinearLayout>
 
     </RelativeLayout>

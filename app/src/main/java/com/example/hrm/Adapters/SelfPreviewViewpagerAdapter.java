@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.hrm.SelfPreviewFinishedFragment;
-import com.example.hrm.SelfPreviewInProgressFragment;
+import com.example.hrm.Fragments.Performance.SelfPreviewFinishedFragment;
+import com.example.hrm.Fragments.Performance.SelfPreviewInProgressFragment;
 
 public class SelfPreviewViewpagerAdapter extends FragmentStateAdapter {
     public SelfPreviewViewpagerAdapter(@NonNull FragmentActivity fragmentActivity) {

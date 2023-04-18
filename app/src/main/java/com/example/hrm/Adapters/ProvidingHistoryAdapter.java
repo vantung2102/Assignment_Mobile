@@ -12,8 +12,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hrm.Common;
-import com.example.hrm.DetailPropertyProvidingHistoryFragment;
-import com.example.hrm.HomeActivity;
+import com.example.hrm.Fragments.Property.DetailPropertyProvidingHistoryFragment;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
 import com.example.hrm.Response.PropertyHistoryAttributes;
 import com.example.hrm.Services.APIService;

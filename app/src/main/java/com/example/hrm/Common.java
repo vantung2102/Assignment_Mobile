@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
+import com.example.hrm.Fragments.LeaveApplication.DetailLeaveApplicationFragment;
 import com.example.hrm.Response.DataResponse;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.StaffAttributes;
@@ -131,5 +132,10 @@ public class Common {
 
             }
         });
+    }
+
+    public static void removePassword(Context mContext) {
+        SharedPreferences sharedPref = mContext.getSharedPreferences("application", Context.MODE_PRIVATE);
+        sharedPref.edit().remove(PASSWORD_KEY).commit();
     }
 }

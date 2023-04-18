@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.hrm.DepartmentFragment"
+        android:name="com.example.hrm.Fragments.Department.DepartmentFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_department">
 

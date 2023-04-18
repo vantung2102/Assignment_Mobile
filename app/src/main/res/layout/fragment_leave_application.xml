@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LeaveFragment">
+    tools:context=".Fragments.Leave.LeaveFragment">
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:id="@+id/relative_main"

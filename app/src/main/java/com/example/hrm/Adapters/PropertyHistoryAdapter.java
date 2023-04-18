@@ -2,9 +2,7 @@ package com.example.hrm.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,13 +10,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hrm.Common;
-import com.example.hrm.DetailPropertyProvidingHistoryFragment;
-import com.example.hrm.HomeActivity;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
 import com.example.hrm.Response.PropertyHistoryAttributes;
 import com.example.hrm.Services.APIService;
 import com.example.hrm.databinding.PropertyHistoriesItemBinding;
-import com.example.hrm.databinding.PropertyProvidingHistoriesItemBinding;
 
 import java.util.List;
 

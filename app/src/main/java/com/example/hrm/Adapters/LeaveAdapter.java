@@ -5,22 +5,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hrm.HomeActivity;
-import com.example.hrm.NewEmployeeFragment;
-import com.example.hrm.R;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.Response.StaffLeaveAttributes;
-import com.example.hrm.StaffTimeOffFragment;
+import com.example.hrm.Fragments.Staff.StaffTimeOffFragment;
 import com.example.hrm.databinding.ItemLoadBinding;
 import com.example.hrm.databinding.LeaveItemBinding;
 
-import java.util.Collection;
 import java.util.List;
 
 public class LeaveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
