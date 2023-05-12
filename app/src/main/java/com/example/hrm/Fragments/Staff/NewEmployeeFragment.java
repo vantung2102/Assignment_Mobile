@@ -356,6 +356,8 @@ public class NewEmployeeFragment extends Fragment {
             //posId,jobId,deId,staffId
             //hide password
             fragmentNewEmployeeBinding.txtPassword.setVisibility(View.GONE);
+            fragmentNewEmployeeBinding.txtTitlePassword.setVisibility(View.GONE);
+            fragmentNewEmployeeBinding.txtTitleConfirmPassword.setVisibility(View.GONE);
             fragmentNewEmployeeBinding.txtMessConfirmPassword.setVisibility(View.GONE);
             fragmentNewEmployeeBinding.txtMessPassword.setVisibility(View.GONE);
             fragmentNewEmployeeBinding.txtConfirmPassword.setVisibility(View.GONE);
@@ -379,7 +381,7 @@ public class NewEmployeeFragment extends Fragment {
             if(staff.getUpperLevel()!=null) {
                 fragmentNewEmployeeBinding.edtManager.setText(staff.getUpperLevel().getFullname(),false);
                 viewModel.setManager(staff.getUpperLevel().getFullname());
-                posId=staff.getUpperLevel().getId();
+                staffId=staff.getUpperLevel().getId();
             }
             if(staff.getDateOfBirth()!=null) edt_birth_day.setText(staff.getDateOfBirth());
             if(staff.getJoinDate()!=null) edt_birth_day.setText(staff.getJoinDate());

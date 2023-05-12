@@ -412,7 +412,8 @@ public class NewEmployeeViewModel extends BaseObservable {
         }
         if((isPasswordVisible||isConfirmPasswordVisible)&&isCheckPassword){
             check=false;
-        }
+            Log.d("isCheckPassword","co");
+        } else  Log.d("isCheckPassword","kh");
         return check;
     }
     private boolean isCheckPassword=true;
