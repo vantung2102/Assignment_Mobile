@@ -59,6 +59,7 @@
             android:background="@drawable/custom_edit_text_blue"
             android:layout_height="50dp"></AutoCompleteTextView>
         <androidx.recyclerview.widget.RecyclerView
+
             android:layout_below="@id/AutoCompleteTextViewSelectStatus"
             android:id="@+id/RecyclerView"
             android:layout_marginTop="10dp"

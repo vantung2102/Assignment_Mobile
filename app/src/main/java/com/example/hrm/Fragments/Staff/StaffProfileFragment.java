@@ -96,12 +96,14 @@ public class StaffProfileFragment extends Fragment {
     private void updateView() {
         if(staffAttributes!=null){
             fragmentStaffProfileBinding.txtAddress.setText(staffAttributes.getAddress());
+            fragmentStaffProfileBinding.txtPosition.setText(staffAttributes.getPosition().getName());
             fragmentStaffProfileBinding.txtFullname.setText(staffAttributes.getFullname());
             fragmentStaffProfileBinding.txtDayofbirth.setText(staffAttributes.getDateOfBirth()!=null?staffAttributes.getDateOfBirth().toString():"");
             fragmentStaffProfileBinding.txtEmail.setText(staffAttributes.getEmail());
             fragmentStaffProfileBinding.txtDepartment.setText(staffAttributes.getDepartment().getName());
             //fragmentStaffProfileBinding.txtCompanyemail.setText(staffAttributes.get());
             fragmentStaffProfileBinding.txtEnglistname.setText(staffAttributes.getFullname());
+            fragmentStaffProfileBinding.txtCompanyemail.setText(staffAttributes.getEmail());
 
             fragmentStaffProfileBinding.txtPhone.setText(staffAttributes.getPhone());
             fragmentStaffProfileBinding.txtJobtitle.setText(staffAttributes.getJobTitle().getTitle());

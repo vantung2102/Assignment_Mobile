@@ -144,7 +144,7 @@ public class PropertyAdpater extends RecyclerView.Adapter<PropertyAdpater.Perfor
 
     private void showFormDelete(PropertyAttributes att, int position, Context context) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Delete Department");
+        alertDialog.setTitle("Delete property");
         String str="Are you sure delete '"+att.getName()+"' ?";
         alertDialog.setMessage(str);
         alertDialog.setIcon(R.drawable.deletetrash);

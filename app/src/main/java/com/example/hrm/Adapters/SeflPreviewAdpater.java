@@ -18,7 +18,10 @@ import java.util.List;
 public class SeflPreviewAdpater extends RecyclerView.Adapter<SeflPreviewAdpater.PerformanceViewholder>{
     private List<PerformanceAttributes> data;
     private HomeActivity activity;
-    public void setData(List<PerformanceAttributes> data, HomeActivity activity){
+    private boolean staffEdit,bossEdit;
+    public void setData(List<PerformanceAttributes> data, HomeActivity activity,boolean staffEdit,boolean bossEdit){
+        this.staffEdit=staffEdit;
+        this.bossEdit=bossEdit;
         this.data=data;
         this.activity = activity;
         notifyDataSetChanged();
@@ -41,7 +44,7 @@ public class SeflPreviewAdpater extends RecyclerView.Adapter<SeflPreviewAdpater.
             holder.binding.txtName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SelfPreviewDetail fragment=new SelfPreviewDetail(att);
+                    SelfPreviewDetail fragment=new SelfPreviewDetail(att,holder.getAdapterPosition(),staffEdit,bossEdit);
                     final Bundle args = new Bundle();
                     args.putString("TAG", fragment.MY_TAG);
                     fragment.setArguments(args);

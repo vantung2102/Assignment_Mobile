@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -38,7 +42,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.RequestBody;
@@ -105,7 +113,9 @@ public class NewEmployeeFragment extends Fragment {
 
     FragmentNewEmployeeBinding fragmentNewEmployeeBinding;
     private StaffShareViewModel staffShareViewModel;
-
+    boolean showPass=false;
+    boolean showconfirmPass=false;
+    NewEmployeeViewModel viewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -114,10 +124,52 @@ public class NewEmployeeFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
         staffShareViewModel = new ViewModelProvider(getActivity()).get(StaffShareViewModel.class);
 
-        NewEmployeeViewModel viewModel=new NewEmployeeViewModel(this.staff);
+        viewModel=new NewEmployeeViewModel(this.staff);
         fragmentNewEmployeeBinding=FragmentNewEmployeeBinding.inflate(inflater);
         fragmentNewEmployeeBinding.setNewEmployeeViewModel(viewModel);
         // Inflate the layout for this fragment
+        fragmentNewEmployeeBinding.txtPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (fragmentNewEmployeeBinding.txtPassword.getRight() - fragmentNewEmployeeBinding.txtPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        //Toast.makeText(LoginActivity.this, "SHow di ba gia", Toast.LENGTH_SHORT).show();
+                        if(!showPass){
+                            fragmentNewEmployeeBinding.txtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            showPass=true;}
+                        else  {
+                            showPass=false;
+                            fragmentNewEmployeeBinding.txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        fragmentNewEmployeeBinding.txtConfirmPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (fragmentNewEmployeeBinding.txtConfirmPassword.getRight() - fragmentNewEmployeeBinding.txtConfirmPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        //Toast.makeText(LoginActivity.this, "SHow di ba gia", Toast.LENGTH_SHORT).show();
+                        if(!showconfirmPass){
+                            fragmentNewEmployeeBinding.txtConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            showconfirmPass=true;}
+                        else  {
+                            showconfirmPass=false;
+                            fragmentNewEmployeeBinding.txtConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
         if (getArguments() != null) {
             Log.d("getArguments","!null");
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -137,36 +189,7 @@ public class NewEmployeeFragment extends Fragment {
             staffAdapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, staffNames);
         } else  Log.d("getArguments","null");
 
-        if(this.staff!=null){
-            //posId,jobId,deId,staffId
-            //hide password
-            fragmentNewEmployeeBinding.txtPassword.setVisibility(View.GONE);
-            fragmentNewEmployeeBinding.txtMessConfirmPassword.setVisibility(View.GONE);
-            fragmentNewEmployeeBinding.txtMessPassword.setVisibility(View.GONE);
-            fragmentNewEmployeeBinding.txtConfirmPassword.setVisibility(View.GONE);
-            viewModel.setCheckPassword(false);
-            if(staff.getPosition()!=null) {
-                fragmentNewEmployeeBinding.edtPositions.setText(staff.getPosition().getName(),false);
-                viewModel.setPosition(staff.getPosition().getName());
-                posId=staff.getPosition().getId();
 
-            }
-            if(staff.getJobTitle()!=null) {
-                fragmentNewEmployeeBinding.edtJobtitle.setText(staff.getJobTitle().getTitle(),false);
-                viewModel.setJobtitle(staff.getJobTitle().getTitle());
-                jobId=staff.getJobTitle().getId();
-            }
-            if(staff.getDepartment()!=null) {
-                fragmentNewEmployeeBinding.edtDepartments.setText(staff.getDepartment().getName(),false);
-                viewModel.setDepartment(staff.getDepartment().getName());
-                deId=staff.getDepartment().getId();
-            }
-            if(staff.getUpperLevel()!=null) {
-                fragmentNewEmployeeBinding.edtManager.setText(staff.getUpperLevel().getFullname(),false);
-                viewModel.setManager(staff.getUpperLevel().getFullname());
-                posId=staff.getUpperLevel().getId();
-            }
-        }
 
         fragmentNewEmployeeBinding.edtDepartments.setAdapter(departmentAdapter);
 
@@ -237,14 +260,44 @@ public class NewEmployeeFragment extends Fragment {
                 DatePickerDialog datePickerDialog=new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        String date = i2 + "-" + (++i1) + "-" + i;
+                        String date =  (++i1) +"-" +i2 + "-" + i;
                         edt_birth_day.setText(date);
                     }
                 }, LocalDate.now().getYear(),LocalDate.now().getMonth().getValue()-1,LocalDate.now().getDayOfMonth());
                 datePickerDialog.show();
             }
         });
+        edt_birth_day.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String dateTo=edt_birth_day.getText().toString();
+                if(dateTo.equals("")) return;
+                String[] tmp2=dateTo.split("-");
+                int fromM,fromD,fromY;
+                fromM= Integer.parseInt(tmp2[0]);
+                fromD= Integer.parseInt(tmp2[1]);
+                fromY= Integer.parseInt(tmp2[2]);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MINUTE, 13);
+                calendar.set(Calendar.HOUR, 7);
+                calendar.set(Calendar.AM_PM, Calendar.AM);
+                calendar.set(Calendar.MONTH, fromM-1);
+                calendar.set(Calendar.DAY_OF_MONTH, fromD);
+                calendar.set(Calendar.YEAR, fromY);
+                viewModel.setCalendarBirthDate(calendar);
+            }
+        });
         final EditText edt_join_day= fragmentNewEmployeeBinding.idEdtJoinDate;
         edt_join_day.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,11 +305,42 @@ public class NewEmployeeFragment extends Fragment {
                 DatePickerDialog datePickerDialog=new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        String date = i2 + "-" + (++i1) + "-" + i;
+                        String date =  (++i1) +"-" +i2 + "-" + i;
                         edt_join_day.setText(date);
                     }
                 },LocalDate.now().getYear(),LocalDate.now().getMonth().getValue()-1,LocalDate.now().getDayOfMonth());
                 datePickerDialog.show();
+            }
+        });
+        edt_join_day.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String dateTo=edt_join_day.getText().toString();
+                if(dateTo.equals("")) return;
+                String[] tmp2=dateTo.split("-");
+                int fromM,fromD,fromY;
+                fromM= Integer.parseInt(tmp2[0]);
+                fromD= Integer.parseInt(tmp2[1]);
+                fromY= Integer.parseInt(tmp2[2]);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MINUTE, 13);
+                calendar.set(Calendar.HOUR, 7);
+                calendar.set(Calendar.AM_PM, Calendar.AM);
+                calendar.set(Calendar.MONTH, fromM-1);
+                calendar.set(Calendar.DAY_OF_MONTH, fromD);
+                calendar.set(Calendar.YEAR, fromY);
+                viewModel.setCalendarJoinDate(calendar);
             }
         });
         fragmentNewEmployeeBinding.btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -268,6 +352,39 @@ public class NewEmployeeFragment extends Fragment {
                 }
             }
         });
+        if(this.staff!=null){
+            //posId,jobId,deId,staffId
+            //hide password
+            fragmentNewEmployeeBinding.txtPassword.setVisibility(View.GONE);
+            fragmentNewEmployeeBinding.txtMessConfirmPassword.setVisibility(View.GONE);
+            fragmentNewEmployeeBinding.txtMessPassword.setVisibility(View.GONE);
+            fragmentNewEmployeeBinding.txtConfirmPassword.setVisibility(View.GONE);
+            viewModel.setCheckPassword(false);
+            if(staff.getPosition()!=null) {
+                fragmentNewEmployeeBinding.edtPositions.setText(staff.getPosition().getName(),false);
+                viewModel.setPosition(staff.getPosition().getName());
+                posId=staff.getPosition().getId();
+
+            }
+            if(staff.getJobTitle()!=null) {
+                fragmentNewEmployeeBinding.edtJobtitle.setText(staff.getJobTitle().getTitle(),false);
+                viewModel.setJobtitle(staff.getJobTitle().getTitle());
+                jobId=staff.getJobTitle().getId();
+            }
+            if(staff.getDepartment()!=null) {
+                fragmentNewEmployeeBinding.edtDepartments.setText(staff.getDepartment().getName(),false);
+                viewModel.setDepartment(staff.getDepartment().getName());
+                deId=staff.getDepartment().getId();
+            }
+            if(staff.getUpperLevel()!=null) {
+                fragmentNewEmployeeBinding.edtManager.setText(staff.getUpperLevel().getFullname(),false);
+                viewModel.setManager(staff.getUpperLevel().getFullname());
+                posId=staff.getUpperLevel().getId();
+            }
+            if(staff.getDateOfBirth()!=null) edt_birth_day.setText(staff.getDateOfBirth());
+            if(staff.getJoinDate()!=null) edt_birth_day.setText(staff.getJoinDate());
+
+        }
         return fragmentNewEmployeeBinding.getRoot();
     }
 
@@ -277,14 +394,19 @@ public class NewEmployeeFragment extends Fragment {
         JSONObject dataParent=new JSONObject();
         JSONObject dataChild=new JSONObject();
         try {
+            String birthday,joinDate;
+            DateFormat simple = new SimpleDateFormat(
+                    "yyyy-MM-dd");
+            birthday=simple.format(new Date(viewModel.getCalendarBirthDate().getTimeInMillis()));
+            joinDate=simple.format(new Date(viewModel.getCalendarJoinDate().getTimeInMillis()));
             dataChild.put("address", fragmentNewEmployeeBinding.txtAddress.getText().toString().trim());
-            dataChild.put("date_of_birth", (new StringBuffer(fragmentNewEmployeeBinding.idEdtDateOfBirth.getText().toString().trim())).reverse());
+            dataChild.put("date_of_birth", birthday);
             dataChild.put("department_id", deId);
             dataChild.put("email", fragmentNewEmployeeBinding.txtEmail.getText().toString().trim());
             dataChild.put("fullname", fragmentNewEmployeeBinding.txtFullname.getText().toString().trim());
             dataChild.put("gender", fragmentNewEmployeeBinding.txtGender.getText().toString().trim());
             dataChild.put("job_title_id", jobId);
-            dataChild.put("join_date", (new StringBuffer(fragmentNewEmployeeBinding.idEdtJoinDate.getText().toString().trim())).reverse());
+            dataChild.put("join_date", joinDate);
             dataChild.put("password", fragmentNewEmployeeBinding.txtPassword.getText().toString().trim());
             dataChild.put("phone", fragmentNewEmployeeBinding.txtPhone.getText().toString().trim());
             dataChild.put("position_id", posId);

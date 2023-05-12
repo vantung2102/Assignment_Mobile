@@ -104,6 +104,7 @@ public class OnboardingSampleFragment extends Fragment {
         getData();
     }
     List<OnboardingSampleStepAtrributes> data=new ArrayList<>();
+    List<OnboardingSampleStepAtrributes> fillterData=new ArrayList<>();
     private void getData() {
         Call<DataResponseList<DatumTemplate<OnboardingSampleStepAtrributes>>> call= APIService.getService().getAllOnboardingSampleSteps(Common.getToken());
         call.enqueue(new Callback<DataResponseList<DatumTemplate<OnboardingSampleStepAtrributes>>>() {
@@ -134,6 +135,7 @@ public class OnboardingSampleFragment extends Fragment {
     int currentPage=1;
     boolean isLoading = false;
     int lastPage=1;
+    boolean isShowfillter=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -151,7 +153,7 @@ public class OnboardingSampleFragment extends Fragment {
         leaveAdapter.setIOnClick(new IOnClick() {
             @Override
             public void showDialog(OnboardingSampleStepAtrributes onboardingSampleStepAtrributes, View view,int pos) {
-                showDialogMain(onboardingSampleStepAtrributes,view,pos);
+                showDialogMain(onboardingSampleStepAtrributes,view,pos,false);
             }
 
             @Override
@@ -181,10 +183,11 @@ public class OnboardingSampleFragment extends Fragment {
                 }
                 Helper.closeKeyboard(getActivity());
                 //Toast.makeText(getContext(), ""+charSequence, Toast.LENGTH_SHORT).show();
-                List<OnboardingSampleStepAtrributes> oldData = leaveAdapter.getData();
-                List<OnboardingSampleStepAtrributes> newData = new ArrayList<>();
-                oldData.forEach(item->{if(item.getPosition().getName().contains(charSequence.toString())){newData.add(item);};});
-                leaveAdapter.showFilterData(newData);
+                List<OnboardingSampleStepAtrributes> oldData = data;
+                fillterData= new ArrayList<>();
+                oldData.forEach(item->{if(item.getPosition().getName().contains(charSequence.toString())){fillterData.add(item);};});
+                leaveAdapter.setData(fillterData, (HomeActivity) getActivity());
+                isShowfillter=true;
             }
 
             @Override
@@ -195,7 +198,7 @@ public class OnboardingSampleFragment extends Fragment {
         fragmentLeaveApplicationBinding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogMain(null,view,-1);
+                showDialogMain(null,view,-1,true);
             }
         });
 
@@ -274,11 +277,12 @@ public class OnboardingSampleFragment extends Fragment {
         void showDialogDelete(OnboardingSampleStepAtrributes att, View view,int pos);
     }
     int posId;
-    private void showDialogMain(OnboardingSampleStepAtrributes onboardingSampleStepAtrributes,View view,int pos) {
+    String posName;
+    private void showDialogMain(OnboardingSampleStepAtrributes onboardingSampleStepAtrributes,View view,int pos,boolean isAdd) {
         final View view2 = LayoutInflater.from(view.getContext()).inflate(R.layout.add_onboarding_ask_dialog, null);
 
         AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
-
+        TextView txt_header=view2.findViewById(R.id.txt_header);
         ImageView close=view2.findViewById(R.id.btn_close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,6 +290,7 @@ public class OnboardingSampleFragment extends Fragment {
                 alertDialog.dismiss();
             }
         });//alertDialog.setTitle("Add Department");
+        if(!isAdd)  txt_header.setText("Update Onboarding Task");
         alertDialog.setIcon(R.drawable.add);
         alertDialog.setCancelable(true);
 //        alertDialog.setMessage("Your Message Here");
@@ -363,6 +368,11 @@ public class OnboardingSampleFragment extends Fragment {
                     JSONObject parent=new JSONObject();
                     JSONObject child=new JSONObject();
                     try {
+                        for(int i=0;i<positions.size();i++){
+                            if(positions.get(i).getName().equals(posName)) {
+                                posId=positions.get(i).getId();
+                            }
+                        }
                         child.put("description",des);
                         child.put("position_id",posId);
                         child.put("task",task);
@@ -400,16 +410,22 @@ public class OnboardingSampleFragment extends Fragment {
                                         JsonObject object = (JsonObject) parser.parse(response.body().toString());
                                         DatumTemplate<OnboardingSampleStepAtrributes> step = gson.fromJson(object.get("data"), new TypeToken<DatumTemplate<OnboardingSampleStepAtrributes>>() {}.getType());
                                         OnboardingSampleStepAtrributes att = step.getAttributes();
+                                        if(!isShowfillter)
                                         data.set(pos,att);
+                                        else {
+                                            data.set(data.indexOf(onboardingSampleStepAtrributes),att);
+                                            fillterData.set(pos,att);
+                                            Log.d("indexOf",String.valueOf(data.indexOf(onboardingSampleStepAtrributes)));
+                                        }
                                         leaveAdapter.notifyItemChanged(pos);
                                         alertDialog.dismiss();
-                                        ((HomeActivity)getActivity()).showToast(true,"Create Successfully!");
+                                        ((HomeActivity)getActivity()).showToast(true,"Update Successfully!");
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call call, Throwable t) {
-                                    ((HomeActivity)getActivity()).showToast(false,"Create failed!");
+                                    ((HomeActivity)getActivity()).showToast(false,"Update failed!");
                                 }
                             });
                         }
@@ -467,7 +483,9 @@ public class OnboardingSampleFragment extends Fragment {
                 if(submited[0]){
                     icIDoSomeThing.showErrorPosition(false);
                 }
-                posId=positions.get(i).getId();
+                posName=adapterView.getItemAtPosition(i).toString();
+                Log.d("itemSelect",adapterView.getItemAtPosition(i).toString());
+//                posId=
             }
         });
         alertDialog.setView(view2);

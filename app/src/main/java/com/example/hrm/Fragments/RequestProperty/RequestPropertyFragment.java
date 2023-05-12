@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,10 +25,14 @@ import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
 import com.example.hrm.Response.Attributes;
 import com.example.hrm.Response.DataListHasMetaResponse;
+import com.example.hrm.Response.DatumStaff;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.Department;
 import com.example.hrm.Response.RequestPropertyAttributes;
 import com.example.hrm.Services.APIService;
+import com.example.hrm.ViewModel.RequestShareViewModel;
+import com.example.hrm.ViewModel.StaffInActiveShareViewModel;
+import com.example.hrm.ViewModel.StaffShareViewModel;
 import com.example.hrm.databinding.AddRequestDialogBinding;
 import com.example.hrm.databinding.FragmentRequestPropertyBinding;
 import com.example.hrm.viewmodel.RequestPropertyVIewModel;
@@ -88,7 +93,7 @@ public class RequestPropertyFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    RequestShareViewModel staffInActiveShareViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +101,24 @@ public class RequestPropertyFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Log.d("dataRequestCreate","create");
+        getData();
+        staffInActiveShareViewModel= new ViewModelProvider(getActivity()).get(RequestShareViewModel.class);
+        staffInActiveShareViewModel.getLeaveApp().observe(getActivity(),request -> {
+            if(request!=null&&data!=null&&adapter!=null&&(data.indexOf(request.getOldData())!=-1)){
+//                Log.d("notifyItemRemovedS",String.valueOf(data.size()));
+//                Log.d("dataRequestO",request.getOldData().getStatus());
+//                Log.d("dataRequestN",request.getLeaveApp().getStatus());
+//                Log.d("dataRequestPos", String.valueOf(data.indexOf(request.getOldData())));
+                data.set(data.indexOf(request.getOldData()),request.getLeaveApp());
+                adapter.removeItem(request.getPositon());
+//                Log.d("notifyItemRemovedPos",String.valueOf(request.getPositon()));
+//                Log.d("notifyItemRemovedE",String.valueOf(data.size()));
+            } else {
+
+            }
+
+        });
 
     }
     RequestPropertyAdapter adapter;
@@ -109,40 +132,39 @@ public class RequestPropertyFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-        binding=FragmentRequestPropertyBinding.inflate(inflater);
-        adapter=new RequestPropertyAdapter();
-        binding.AutoCompleteTextViewSelectStatus.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,getActivity().getResources().getStringArray(R.array.status)));
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "add", Toast.LENGTH_SHORT).show();
-            }
-        });
-        binding.AutoCompleteTextViewSelectStatus.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                binding.AutoCompleteTextViewSelectStatus.showDropDown();
-                return false;
-            }
-        });
-        binding.AutoCompleteTextViewSelectStatus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapter.showFilter(getActivity().getResources().getStringArray(R.array.status)[i]);
-            }
-        });
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        binding.RecyclerView.setAdapter(adapter);
-        DividerItemDecoration itemDecoration=new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-        binding.RecyclerView.addItemDecoration(itemDecoration);
-        binding.RecyclerView.setLayoutManager(linearLayoutManager);
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showFormAdd(view.getContext());
-            }
-        });
-        getData();
+        if(binding==null){
+            binding=FragmentRequestPropertyBinding.inflate(inflater);
+            adapter=new RequestPropertyAdapter();
+            binding.AutoCompleteTextViewSelectStatus.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,getActivity().getResources().getStringArray(R.array.status)));
+            binding.AutoCompleteTextViewSelectStatus.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getActivity().getResources().getStringArray(R.array.status));
+                    binding.AutoCompleteTextViewSelectStatus.setAdapter(adapter);
+                    binding.AutoCompleteTextViewSelectStatus.showDropDown();
+                    return false;
+                }
+            });
+            binding.AutoCompleteTextViewSelectStatus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    adapter.showFilter(getActivity().getResources().getStringArray(R.array.status)[i]);
+                }
+            });
+            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+            binding.RecyclerView.setAdapter(adapter);
+            DividerItemDecoration itemDecoration=new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+            binding.RecyclerView.addItemDecoration(itemDecoration);
+            binding.RecyclerView.setLayoutManager(linearLayoutManager);
+            binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showFormAdd(view.getContext());
+                }
+            });
+        }
+
+
         return binding.getRoot();
     }
 
@@ -249,8 +271,9 @@ public class RequestPropertyFragment extends Fragment {
                                 DatumTemplate<RequestPropertyAttributes> emp = gson.fromJson(object.get("data"), new TypeToken<DatumTemplate<RequestPropertyAttributes>>() {
                                 }.getType());
                                 RequestPropertyAttributes department = emp.getAttributes();
-                                data.add(department);
-                                adapter.notifyItemInserted(data.size() - 1);
+                                data.add(0,department);
+                                adapter.addItem(department);
+                                //adapter.notifyDataSetChanged();
                                 Log.d("eeeeeeee", emp.toString());
                                 alertDialog.dismiss();
                                 ((HomeActivity)getActivity()).showToast(true,"Create Request Property Success!");

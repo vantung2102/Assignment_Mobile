@@ -72,7 +72,7 @@ public class PropertyHistoryAdapter extends RecyclerView.Adapter<PropertyHistory
     }
     private void showFormDelete(PropertyHistoryAttributes att, int position, Context context) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Delete Department");
+        alertDialog.setTitle("Delete");
         String str="Are you sure delete this history "+"?";
         alertDialog.setMessage(str);
         alertDialog.setIcon(R.drawable.deletetrash);

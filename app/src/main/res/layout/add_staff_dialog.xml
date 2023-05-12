@@ -103,6 +103,7 @@
                 android:textSize="@dimen/nomarlText"
                 ></TextView>
             <EditText
+                android:drawableEnd="@drawable/hide"
                 android:id="@+id/txt_password"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_edit_text_cut"
@@ -130,6 +131,7 @@
                 android:textSize="@dimen/nomarlText"
                 ></TextView>
             <EditText
+                android:drawableEnd="@drawable/hide"
                 android:id="@+id/txt_confirm_password"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_edit_text_cut"

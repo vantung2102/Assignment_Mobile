@@ -84,7 +84,7 @@ public class RequestPropertyAdapter extends RecyclerView.Adapter<RequestProperty
                 RequestPropertyAttributes attributes=null;
                 if(!isFilter) attributes= data.get(position); else attributes=filterData.get(position);
                 activity.addOrRemoveBackButton(true);
-                DetailRequestPropertyFragment fragment=new DetailRequestPropertyFragment(attributes);
+                DetailRequestPropertyFragment fragment=new DetailRequestPropertyFragment(attributes, holder.getAdapterPosition());
                 Bundle bundle = new Bundle();
                 bundle.putString("TAG",fragment.MY_TAG);
                 fragment.setArguments(bundle);
@@ -167,6 +167,28 @@ public class RequestPropertyAdapter extends RecyclerView.Adapter<RequestProperty
         this.filterData=new ArrayList<>();
         data.forEach(item->{if(item.getStatus().equals(status.toLowerCase(Locale.ROOT))) filterData.add(item);});
         this.isFilter=true;
+        notifyDataSetChanged();
+    }
+
+    public List<RequestPropertyAttributes> getData() {
+        if(isFilter) return this.filterData;
+        return this.data;
+    }
+
+    public void removeItem(int positon) {
+        if(isFilter){
+            filterData.remove(positon);
+            notifyItemRemoved(positon);
+        }
+        else {
+            notifyItemChanged(positon);
+        }
+    }
+
+    public void addItem(RequestPropertyAttributes department) {
+        if(isFilter&&this.status.equals(activity.getResources().getStringArray(R.array.status)[0])){
+            this.filterData.add(0,department);
+        }
         notifyDataSetChanged();
     }
 

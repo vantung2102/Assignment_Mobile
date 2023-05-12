@@ -116,6 +116,11 @@
     <string name="JobTitleIsRequired">Job Title is required</string>
     <string name="ManagerIsRequired">Manager is required</string>
     <string name="AddressIsRequired">Address is required</string>
+    <string name="Manager">Manager</string>
+    <string name="selectManager">(please select new manager for staff)</string>
+    <string name="selectManagerHint">Select Tob Manager</string>
+    <string name="START_PERFORMANCE">Start Performance</string>
+    <string name="AddPerformance">Add Performance</string>
     <string-array name="leaveType">
         <item>casual leave</item>
         <item>unpaid leave</item>
@@ -132,6 +137,6 @@
     <string-array name="status">
         <item>Pending</item>
         <item>Approved</item>
-        <item>Cancled</item>
+        <item>cancelled</item>
     </string-array>
 </resources>

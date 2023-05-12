@@ -6,8 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.hrm.Adapters.SeflPreviewAdpater;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
+import com.example.hrm.Response.DatumTemplate;
+import com.example.hrm.Response.PerformanceAttributes;
+import com.example.hrm.databinding.FinishedSelfPreviewLayoutBinding;
+import com.example.hrm.databinding.InprogressSelfPreviewLayoutBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,18 +35,20 @@ public class SelfPreviewFinishedFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SelfPreviewFinishedFragment() {
+    public SelfPreviewFinishedFragment(List<PerformanceAttributes> finished) {
         // Required empty public constructor
+        data=finished;
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SelfPreviewInProgressFragment.
      */
+    public SelfPreviewFinishedFragment(){
+
+    }
     // TODO: Rename and change types and number of parameters
     public static SelfPreviewFinishedFragment newInstance(String param1, String param2) {
         SelfPreviewFinishedFragment fragment = new SelfPreviewFinishedFragment();
@@ -55,11 +67,19 @@ public class SelfPreviewFinishedFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    FinishedSelfPreviewLayoutBinding binding;
+    SeflPreviewAdpater adpater;
+    private List<PerformanceAttributes> data=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.finished_self_preview_layout, container, false);
+        binding=FinishedSelfPreviewLayoutBinding.inflate(inflater);
+        adpater=new SeflPreviewAdpater();
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        binding.rcvFinished.setLayoutManager(linearLayoutManager);
+        binding.rcvFinished.setAdapter(adpater);
+        adpater.setData(data,(HomeActivity) getActivity(),false,false);
+        return binding.getRoot();
     }
 }

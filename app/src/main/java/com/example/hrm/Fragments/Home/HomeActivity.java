@@ -24,10 +24,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hrm.Common;
 import com.example.hrm.Fragments.Department.DepartmentFragment;
 import com.example.hrm.Fragments.Login.LoginActivity;
+import com.example.hrm.Fragments.Performance.ReviewForStaff;
 import com.example.hrm.Fragments.Staff.InactiveStaffFragment;
 import com.example.hrm.Fragments.Jobtitle.JobTitleFragment;
 import com.example.hrm.Fragments.LeaveApplication.LeaveApplicationFragment;
@@ -38,6 +40,7 @@ import com.example.hrm.Fragments.Position.PositionFragment;
 import com.example.hrm.Fragments.Property.PropertiesFragment;
 import com.example.hrm.Fragments.Property.PropertiesGroupFragment;
 import com.example.hrm.Fragments.Property.ProvidingHistoryFragment;
+import com.example.hrm.Fragments.Staff.StaffInfoFragment;
 import com.example.hrm.R;
 import com.example.hrm.Fragments.RequestProperty.RequestPropertyFragment;
 import com.example.hrm.Response.DataResponse;
@@ -116,7 +119,18 @@ public class HomeActivity extends AppCompatActivity {
                 TextView txtname=view.findViewById(R.id.txt_staff_name);
                 TextView txtRole=view.findViewById(R.id.txt_staff_role);
                 txtname.setText(staff.getFullname());
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDrawer.closeDrawers();
+                        StaffInfoFragment staffInfoFragment=new StaffInfoFragment(Common.getStaff(),-1);
+                        final Bundle args = new Bundle();
+                        args.putString("TAG", staffInfoFragment.MY_TAG);
+                        staffInfoFragment.setArguments(args);
+                        relaceFragment(staffInfoFragment);
 
+                    }
+                });
                 if(staff.getRoles()!=null&&staff.getRoles().size()>0&&staff.getRoles().get(0).getName().equals(Common.MANAGER)){
                     Log.d("Login",Common.MANAGER);
                     txtRole.setText(Common.MANAGER);
@@ -136,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
                     //all property fragment
                     nvDrawer.getMenu().findItem(R.id.PropertyManagement).setVisible(false);
                 }
+
                 //set info user to drawer
 
 
@@ -185,10 +200,12 @@ public class HomeActivity extends AppCompatActivity {
                 for(int i=0;i<res.getData().size();i++){
                     StaffAttributes att=res.getData().get(i).getAttributes();
                     names[i]=att.getFullname();
+                    staffAttributes.add(att);
                 }
                 Common.setStaffs(staffAttributes);
                 Common.setStaffNames(names);
                 Log.d("names",names[0]);
+                Log.d("setStaffs", String.valueOf(Common.getStaffs().size()));
             }
 
             @Override
@@ -291,6 +308,11 @@ public class HomeActivity extends AppCompatActivity {
 
                     fragmentClass = RequestPropertyFragment.class;
                     tag=((RequestPropertyFragment) fragment).MY_TAG;
+                    break;
+                case R.id.nav_preview_for_staff:
+
+                    fragmentClass = ReviewForStaff.class;
+                    tag=((ReviewForStaff) fragment).MY_TAG;
                     break;
                     default:
 
@@ -397,7 +419,7 @@ public class HomeActivity extends AppCompatActivity {
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.flContent);
 
         //Prevent adding same fragment on top
-        if (currentFragment.getClass() == fragment.getClass()) {
+        if (currentFragment!=null&&currentFragment.getClass() == fragment.getClass()) {
             return;
         }
         //If fragment is already on stack, we can pop back stack to prevent stack infinite growth

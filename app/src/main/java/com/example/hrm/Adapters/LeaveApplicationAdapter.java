@@ -77,7 +77,7 @@ public class LeaveApplicationAdapter extends RecyclerView.Adapter<RecyclerView.V
             leaveViewholder.leaveItemBinding.btnShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DetailLeaveApplicationFragment fragment=new DetailLeaveApplicationFragment(att);
+                    DetailLeaveApplicationFragment fragment=new DetailLeaveApplicationFragment(att,holder.getAdapterPosition());
                     Bundle bundle=new Bundle();
                     bundle.putString("TAG","Detail leave application");
                     bundle.putString("TYPE",type);

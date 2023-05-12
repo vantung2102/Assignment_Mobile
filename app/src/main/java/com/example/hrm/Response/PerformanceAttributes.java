@@ -5,8 +5,10 @@ import javax.annotation.Generated;
         import com.google.gson.annotations.Expose;
         import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @Generated("jsonschema2pojo")
-public class PerformanceAttributes {
+public class PerformanceAttributes implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -350,4 +352,40 @@ public class PerformanceAttributes {
         this.boss = boss;
     }
 
+    @Override
+    public String toString() {
+        return "PerformanceAttributes{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", active=" + active +
+                ", goalsSetStaff='" + goalsSetStaff + '\'' +
+                ", goalsSetBoss=" + goalsSetBoss +
+                ", achievementStaff='" + achievementStaff + '\'' +
+                ", achievementBoss=" + achievementBoss +
+                ", goalsWithCompanyStaff='" + goalsWithCompanyStaff + '\'' +
+                ", goalsWithCompanyBoss=" + goalsWithCompanyBoss +
+                ", challengingStaff='" + challengingStaff + '\'' +
+                ", challengingBoss=" + challengingBoss +
+                ", leastEnjoyStaff='" + leastEnjoyStaff + '\'' +
+                ", leastEnjoyBoss=" + leastEnjoyBoss +
+                ", contributeStaff='" + contributeStaff + '\'' +
+                ", contributeBoss=" + contributeBoss +
+                ", currentJobStaff='" + currentJobStaff + '\'' +
+                ", currentJobBoss=" + currentJobBoss +
+                ", improvementStaff='" + improvementStaff + '\'' +
+                ", improvementBoss=" + improvementBoss +
+                ", obstructingStaff='" + obstructingStaff + '\'' +
+                ", obstructingBoss=" + obstructingBoss +
+                ", feedbackStaff='" + feedbackStaff + '\'' +
+                ", feedbackBoss=" + feedbackBoss +
+                ", descriptionStaff='" + descriptionStaff + '\'' +
+                ", descriptionBoss=" + descriptionBoss +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", staff=" + staff +
+                ", boss=" + boss +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package com.example.hrm.Fragments.LeaveApplication;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
@@ -23,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,12 +37,21 @@ import com.example.hrm.Common;
 import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
 import com.example.hrm.Response.DataResponseList;
+import com.example.hrm.Response.DatumStaff;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.LeaveApplicationAttributes;
+import com.example.hrm.Response.PropertyAttributes;
 import com.example.hrm.Services.APIService;
+import com.example.hrm.ViewModel.LeaveAppShareViewModel;
+import com.example.hrm.ViewModel.StaffShareViewModel;
 import com.example.hrm.databinding.AddLeaveDialogBinding;
 import com.example.hrm.databinding.FragmentLeaveApplicationBinding;
 import com.example.hrm.viewmodel.AddLeaveViewModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -105,7 +117,16 @@ public class LeaveApplicationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Log.d("leave","onCreate");
         getData();
+        LeaveAppShareViewModel staffShareViewModel = new ViewModelProvider(getActivity()).get(LeaveAppShareViewModel.class);
+        staffShareViewModel.getLeaveApp().observe(getActivity(),leaveApp -> {
+            if(leaveApp!=null&&data!=null&&data.size()!=0){
+                Log.d("leave","getPositon"+String.valueOf(leaveApp.getPositon()));
+                data.remove(leaveApp.getPositon());
+                leaveAdapter.notifyItemRemoved(leaveApp.getPositon());
+            }
+        });
     }
     List<LeaveApplicationAttributes> data=new ArrayList<>();
     private void getData() {
@@ -139,34 +160,27 @@ public class LeaveApplicationFragment extends Fragment {
     boolean isLoading = false;
     int lastPage=1;
     boolean submited=false;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-        StrictMode.setThreadPolicy(policy);
-        fragmentLeaveApplicationBinding=FragmentLeaveApplicationBinding.inflate(inflater);
-        leaveAdapter=new LeaveApplicationAdapter();
-        DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-        fragmentLeaveApplicationBinding.rcvLeave.setAdapter(leaveAdapter);
-        leaveAdapter.setData(data, (HomeActivity) getActivity(),Common.STATUS_PENDING);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        fragmentLeaveApplicationBinding.rcvLeave.setLayoutManager(linearLayoutManager);
-        fragmentLeaveApplicationBinding.rcvLeave.addItemDecoration(dividerItemDecoration);
-        //initScrollListener();
-        //init dropdown option
-        String[] options=new String[]{"Pending","Approve","Cancel"};
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, options);
-        fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setAdapter(adapter);
-        fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setFocusable(false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d("leave","onViewCreated");
         fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                //Toast.makeText(getContext(), String.valueOf(fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getAdapter().getCount()), Toast.LENGTH_SHORT).show();
+
+                String[] options=new String[]{"Pending","Approve","Cancel"};
+                ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, options);
+                Log.d("leave","setAdapter "+options.length);
+                fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setAdapter(adapter);
                 fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.showDropDown();
                 return false;
             }
         });
+
+
+
         fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -175,7 +189,8 @@ public class LeaveApplicationFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Toast.makeText(getContext(), ""+charSequence, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), ""+charSequence, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -195,11 +210,60 @@ public class LeaveApplicationFragment extends Fragment {
                 showDialog(view);
             }
         });
-        getLAByStatus(0);
+
+    }
+
+    @Override
+    public void onPause() {
+        Log.d("leave","onPause");
+        super.onPause();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        Log.d("leave","onCreateView");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+
+        Log.d("leave","binding"+(fragmentLeaveApplicationBinding!=null?"!null":"null"));
+        if(fragmentLeaveApplicationBinding==null){
+            fragmentLeaveApplicationBinding=FragmentLeaveApplicationBinding.inflate(inflater);
+            leaveAdapter=new LeaveApplicationAdapter();
+            DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+            fragmentLeaveApplicationBinding.rcvLeave.setAdapter(leaveAdapter);
+            leaveAdapter.setData(data, (HomeActivity) getActivity(),Common.STATUS_PENDING);
+            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+            fragmentLeaveApplicationBinding.rcvLeave.setLayoutManager(linearLayoutManager);
+            fragmentLeaveApplicationBinding.rcvLeave.addItemDecoration(dividerItemDecoration);
+            //initScrollListener();
+            //init dropdown option
+            String[] options=new String[]{"Pending","Approve","Cancel"};
+            ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, options);
+            Log.d("leave","setAdapter "+options.length);
+            fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setAdapter(adapter);
+            Log.d("leave","setAdapter getCount "+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getAdapter().getCount());
+            fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setFocusable(true);
+            fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setThreshold(1);
+
+            getLAByStatus(0);
+        }
+        else{
+            Log.d("leave","setAdapter getCount !=null"+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getAdapter().getCount());
+//            Log.d("leave","setAdapter item 1"+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getAdapter().getItem(0).toString());
+//            Log.d("leave","setAdapter item 2"+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getAdapter().getItem(1).toString());
+//            Log.d("leave","setAdapter item 3"+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getAdapter().getItem(2).toString());
+            Log.d("leave","getText "+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getText());
+            fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.setText("");
+            Log.d("leave","getText "+fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getText());
+        }
         return fragmentLeaveApplicationBinding.getRoot();
     }
 
     private void getLAByStatus(int i) {
+
         JSONObject object=new JSONObject();
         try {
             object.put("status",i);
@@ -450,10 +514,19 @@ public class LeaveApplicationFragment extends Fragment {
                         dataChild.put("end_day",endDate);
                         dataParent.put("leave_application",dataChild);
                         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), dataParent.toString());
-                        Call call= APIService.getServiceJson().addLeaveApplication(body,Common.getToken());
-                        Response response=call.execute();
+                        Call<JsonObject> call = APIService.getServiceJson().addLeaveApplication(body,Common.getToken());
+                        Response<JsonObject> response = call.execute();
                         alertDialog.dismiss();
                         if(response.isSuccessful()){
+                            if(!fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getText().equals(Common.STATUS_APPROVED)&&!fragmentLeaveApplicationBinding.AutoCompleteTextViewSelectStatus.getText().equals(Common.STATUS_CANCLED)){
+                                Gson gson= (new GsonBuilder()).setPrettyPrinting().create();
+                                JsonParser parser = new JsonParser();
+                                JsonObject object = (JsonObject) parser.parse(response.body().toString());// response will be the json String
+                                DatumTemplate<LeaveApplicationAttributes> emp = gson.fromJson(object.get("data"), new TypeToken<DatumTemplate<LeaveApplicationAttributes>>() {}.getType());
+                                LeaveApplicationAttributes leaveApp=emp.getAttributes();
+                                data.add(0,leaveApp);
+                                leaveAdapter.notifyItemInserted(0);
+                            }
                             ((HomeActivity)getActivity()).showToast(true,"Create Leave Application Success!");
                         } else {
                             ((HomeActivity)getActivity()).showToast(false,"Create Leave Application Failed!");

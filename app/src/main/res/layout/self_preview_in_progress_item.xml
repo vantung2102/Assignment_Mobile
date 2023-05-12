@@ -32,7 +32,7 @@
                     ></TextView>
                 <TextView
                     android:id="@+id/txt_name"
-                    android:textColor="@color/black"
+                    android:textColor="@color/blue"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"

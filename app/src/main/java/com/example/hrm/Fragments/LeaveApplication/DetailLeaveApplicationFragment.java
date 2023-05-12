@@ -3,6 +3,7 @@ package com.example.hrm.Fragments.LeaveApplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,12 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hrm.Common;
+import com.example.hrm.Fragments.Home.HomeActivity;
+import com.example.hrm.Model.LeaveAppWithPosAttributes;
+import com.example.hrm.Model.PropertyWithPosAttributes;
 import com.example.hrm.R;
 import com.example.hrm.Response.DataResponse;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.LeaveApplicationAttributes;
 import com.example.hrm.Response.Staff;
 import com.example.hrm.Services.APIService;
+import com.example.hrm.ViewModel.LeaveAppShareViewModel;
+import com.example.hrm.ViewModel.PropertyShareViewModel;
 import com.example.hrm.databinding.FragmentDetailLeaveApplicationBinding;
 
 import org.json.JSONException;
@@ -47,8 +53,9 @@ public class DetailLeaveApplicationFragment extends Fragment {
     }
     private LeaveApplicationAttributes att;
     private String type;
-    public DetailLeaveApplicationFragment(LeaveApplicationAttributes att) {
-
+    private  int pos;
+    public DetailLeaveApplicationFragment(LeaveApplicationAttributes att,int pos) {
+    this.pos=pos;
         this.att=att;
     }
 
@@ -79,10 +86,12 @@ public class DetailLeaveApplicationFragment extends Fragment {
         }
     }
     FragmentDetailLeaveApplicationBinding binding;
+    LeaveAppShareViewModel leaveAppShareViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment\
+         leaveAppShareViewModel = new ViewModelProvider(getActivity()).get(LeaveAppShareViewModel.class);
         binding=FragmentDetailLeaveApplicationBinding.inflate(inflater);
         binding.txtStartDate.setText(att.getStartDay());
         binding.txtEndDate.setText(att.getEndDay());
@@ -145,10 +154,15 @@ public class DetailLeaveApplicationFragment extends Fragment {
                         if(response.body().getData().getAttributes().getStatus().equals(Common.STATUS_APPROVED)){
                             Log.d("doSome","STATUS_APPROVED");
                                 UpdateButton(true);
+
+                            ((HomeActivity)getActivity()).showToast(true,"Approve Leave Application Success!");
                         } else if(response.body().getData().getAttributes().getStatus().equals(Common.STATUS_CANCLED)){
                             Log.d("doSome","STATUS_CANCLED");
                             UpdateButton(false);
+                            ((HomeActivity)getActivity()).showToast(true,"Cancle Leave Application Success!");
                         }
+                        LeaveAppWithPosAttributes propertyWithPosAttributes=new LeaveAppWithPosAttributes(response.body().getData().getAttributes(),pos);
+                        leaveAppShareViewModel.setLeaveApp(propertyWithPosAttributes);
                     } else {
                         Log.d("response", String.valueOf(response.code()));
                     }

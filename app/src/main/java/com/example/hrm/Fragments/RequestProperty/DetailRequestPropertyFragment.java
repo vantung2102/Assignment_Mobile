@@ -7,14 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hrm.Common;
+import com.example.hrm.Model.RequestWithPosAttributes;
 import com.example.hrm.R;
 import com.example.hrm.Response.DataResponse;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.RequestPropertyAttributes;
 import com.example.hrm.Response.Staff;
 import com.example.hrm.Services.APIService;
+import com.example.hrm.ViewModel.RequestShareViewModel;
+import com.example.hrm.ViewModel.StaffShareViewModel;
 import com.example.hrm.databinding.FragmentDetailRequestPropertyBinding;
 
 import org.json.JSONException;
@@ -46,8 +50,8 @@ public class DetailRequestPropertyFragment extends Fragment {
     }
     private RequestPropertyAttributes att;
     private String type;
-    public DetailRequestPropertyFragment(RequestPropertyAttributes att) {
-
+    public DetailRequestPropertyFragment(RequestPropertyAttributes att,int pos) {
+        this.pos=pos;
         this.att=att;
     }
 
@@ -76,12 +80,16 @@ public class DetailRequestPropertyFragment extends Fragment {
             this.type=getArguments().getString("TYPE", Common.STATUS_PENDING);
             Log.d("type",type);
         }
+
     }
     FragmentDetailRequestPropertyBinding binding;
+    RequestShareViewModel requestShareViewModel;
+    private  int pos;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        requestShareViewModel = new ViewModelProvider(getActivity()).get(RequestShareViewModel.class);
         binding=FragmentDetailRequestPropertyBinding.inflate(inflater);
         binding.txtReason.setText(att.getReason());
         binding.txtRequester.setText(att.getRequester()!=null?att.getRequester().getFullname():" ");
@@ -144,8 +152,10 @@ public class DetailRequestPropertyFragment extends Fragment {
                         } else if(response.body().getData().getAttributes().getStatus().equals(Common.STATUS_CANCLED)){
                             Log.d("doSome","STATUS_CANCLED");
                         }
+                        requestShareViewModel.setLeaveApp(new RequestWithPosAttributes(response.body().getData().getAttributes(),att,pos,0));
                         att=response.body().getData().getAttributes();
                         updateButton();
+
                     } else {
                         Log.d("response", String.valueOf(response.code()));
                     }

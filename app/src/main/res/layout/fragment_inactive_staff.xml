@@ -103,63 +103,84 @@
                 android:layout_height="50dp"></AutoCompleteTextView>
         </RelativeLayout>
         <Button
+            android:textSize="@dimen/nomarlText"
             android:layout_gravity="center_horizontal"
             android:id="@+id/btn_search"
-            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Search"></Button>
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
+            android:paddingLeft="@dimen/paddingStart"
+            android:paddingRight="@dimen/paddingStart"
+            android:paddingBottom="@dimen/headerPadding"
+            android:paddingTop="@dimen/headerPadding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:weightSum="10"
-            >
-            <TextView
-                android:layout_gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_index"
-                android:textAlignment="center"
-                android:text="ID"></TextView>
-            <TextView
-                android:textAlignment="center"
-                android:layout_weight="2"
-                android:id="@+id/txt_avar"
-                android:layout_marginLeft="20dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Avar"></TextView>
-            <TextView
-                android:textAlignment="center"
-                android:layout_weight="3"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/txt_avar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_departmentName"
-                android:text="Name"></TextView>
+            android:background="@color/blue">
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="10"
-                android:layout_weight="4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                >
+                <TextView
+                    android:textSize="@dimen/nomarlText"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_index"
+                    android:text="STT"></TextView>
                 <TextView
                     android:textAlignment="center"
-                    android:layout_weight="10"
+                    android:textSize="@dimen/nomarlText"
+                    android:textColor="@color/white"
+                    android:layout_weight="2"
+                    android:id="@+id/txt_avar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Action"></TextView>
-            </LinearLayout>
+                    android:text="Avar"></TextView>
+                <TextView
+                    android:textSize="@dimen/nomarlText"
+                    android:textColor="@color/white"
+                    android:layout_weight="3"
+                    android:layout_toRightOf="@id/txt_avar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_departmentName"
+                    android:text="Name"></TextView>
+                <TextView
+                    android:textSize="@dimen/nomarlText"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_toRightOf="@id/txt_departmentName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_id"
+                    android:text="ID"></TextView>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="@dimen/nomarlText"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:layout_weight="10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Action"></TextView>
+                </LinearLayout>
 
+            </LinearLayout>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rcv_departments"

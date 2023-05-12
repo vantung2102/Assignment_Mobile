@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.Fragments.LeaveApplication.DetailLeaveApplicationFragment;
 import com.example.hrm.Response.DataResponse;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.StaffAttributes;
 import com.example.hrm.Services.APIService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,6 +27,9 @@ public class Common {
     public static final String STATUS_RECALLED = "recall";
     public static final String MANAGER ="Manager" ;
     public static final String STAFF ="Staff" ;
+    public static final String STATUS_INPROGRESS = "in_progress";
+    public static final String STATUS_SELF_REVIEWED = "self_reviewed";
+    public static final String STATUS_COMPLETE = "completed";
 
     public  static  String EMAIL_KEY="EMAIL";
     public  static  String PASSWORD_KEY="PASSWORD";
@@ -85,9 +90,10 @@ public class Common {
         Common.staffNames = staffNames;
     }
 
-    public static List<StaffAttributes> staffs;
+    public static List<StaffAttributes> staffs=new ArrayList<>();
 
     public static List<StaffAttributes> getStaffs() {
+        List<StaffAttributes> tmp=new ArrayList<>();
         return staffs;
     }
 
@@ -137,5 +143,13 @@ public class Common {
     public static void removePassword(Context mContext) {
         SharedPreferences sharedPref = mContext.getSharedPreferences("application", Context.MODE_PRIVATE);
         sharedPref.edit().remove(PASSWORD_KEY).commit();
+    }
+
+    public static StaffAttributes findStaffByName(String managerName) {
+        for(int i=0;i<staffs.size();i++){
+            StaffAttributes att=staffs.get(i);
+            if(att.getFullname().equals(managerName)) return att;
+        }
+        return null;
     }
 }

@@ -122,7 +122,7 @@ public class PropertiesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         PropertyShareViewModel staffShareViewModel = new ViewModelProvider(getActivity()).get(PropertyShareViewModel.class);
         staffShareViewModel.getProperty().observe(getActivity(),property -> {
-            if(property!=null&&desDepartments!=null&&desDepartments.size()!=0){
+            if(property!=null&&desDepartments!=null&&desDepartments.size()!=0&&property.getPositon()<desDepartments.size()){
                 desDepartments.set(property.getPositon(),property.getProperty());
                 departmentAdapter.notifyItemChanged(property.getPositon());
 

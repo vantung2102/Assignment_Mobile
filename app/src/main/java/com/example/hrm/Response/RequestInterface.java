@@ -24,7 +24,7 @@ public interface RequestInterface {
     @POST("v1/staff_management/staffs")
     Call<JsonObject> addStaff(@Body RequestBody body, @Header("Authorization") String token);
     @POST("v1/leave_management/leave_applications")
-    Call<ResponseBody> addLeaveApplication(@Body RequestBody body,@Header("Authorization") String token);
+    Call<JsonObject> addLeaveApplication(@Body RequestBody body,@Header("Authorization") String token);
 
     @POST("v1/property_management/group_properties")
     Call<JsonObject> addPropertyGroup(@Body RequestBody body, @Header("Authorization") String token);

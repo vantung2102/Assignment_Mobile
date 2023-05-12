@@ -68,7 +68,7 @@ public class OnboardingSampleStepAdapter extends RecyclerView.Adapter<RecyclerVi
             leaveViewholder.leaveItemBinding.btnShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    iOnClick.showDialog(att,view,position);
+                    iOnClick.showDialog(att,view,holder.getAdapterPosition());
                 }
             });
             leaveViewholder.leaveItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {

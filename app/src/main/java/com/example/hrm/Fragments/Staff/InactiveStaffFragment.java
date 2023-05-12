@@ -16,11 +16,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hrm.Adapters.UserAdapter;
+import com.example.hrm.Adapters.UserInactiveAdapter;
 import com.example.hrm.Common;
 import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
@@ -30,6 +32,9 @@ import com.example.hrm.Response.DatumStaff;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.StaffAttributes;
 import com.example.hrm.Services.APIService;
+import com.example.hrm.ViewModel.StaffInActiveShareViewModel;
+import com.example.hrm.ViewModel.StaffRecoverShareViewModel;
+import com.example.hrm.ViewModel.StaffShareViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +80,7 @@ public class InactiveStaffFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    List<DatumStaff> users=new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +88,21 @@ public class InactiveStaffFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        StaffRecoverShareViewModel staffShareViewModel = new ViewModelProvider(getActivity()).get(StaffRecoverShareViewModel.class);
+//        staffShareViewModel.getLeaveApp().observe(getActivity(),staff -> {
+//            Log.d("StaffFragment : Staff: ",staff.toString());
+//            if(staff!=null){
+//                users.remove(staff.getPositon());
+//                userAdapter.notifyDataSetChanged();
+//            }
+//        });
     }
     private View mView;
     private RecyclerView rcvDes;
     private LinearLayout btn_add;
     private Button btnSearch;
     private EditText edtStaffName;
-    UserAdapter userAdapter;
+    UserInactiveAdapter userAdapter;
     private AutoCompleteTextView departments;
     private AutoCompleteTextView jobtitles;
     private AutoCompleteTextView positions;
@@ -100,7 +113,7 @@ public class InactiveStaffFragment extends Fragment {
         // Inflate the layout for this fragment
         mView=inflater.inflate(R.layout.fragment_inactive_staff, container, false);
         rcvDes=mView.findViewById(R.id.rcv_departments);
-        userAdapter=new UserAdapter();
+        userAdapter=new UserInactiveAdapter();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
         rcvDes.addItemDecoration(dividerItemDecoration);
@@ -113,8 +126,12 @@ public class InactiveStaffFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String staffName=edtStaffName.getText().toString();
-                if(!staffName.equals("")){
-                    userAdapter.showLike(staffName);
+                String desName=departments.getText().toString();
+                String posName=positions.getText().toString();
+                String jobName=jobtitles.getText().toString();
+                Toast.makeText(getContext(), desName+" "+posName+" "+jobName, Toast.LENGTH_SHORT).show();
+                if(!staffName.equals("")||!desName.equals("")||!posName.equals("")||!jobName.equals("")){
+                    userAdapter.showLike(staffName,desName,posName,jobName);
                 } else {
                     userAdapter.showAll();
                 }
@@ -169,13 +186,11 @@ public class InactiveStaffFragment extends Fragment {
                 //departmentAdapter.setData(response.body());
                 Log.d("getData", String.valueOf(response.body().getData().size()));
                 DataResponseList<DatumTemplate<StaffAttributes>> dataResponseList= response.body();
-
-                List<DatumStaff> list=new ArrayList<>();
                 dataResponseList.getData().forEach(item->{
                     DatumStaff datumTemplate=new DatumStaff(item);
-                    list.add(datumTemplate);
+                    users.add(datumTemplate);
                 });
-                userAdapter.setData(list,getContext(),(HomeActivity) getActivity());
+                userAdapter.setData(users,getContext(),(HomeActivity) getActivity());
             }
 
             @Override

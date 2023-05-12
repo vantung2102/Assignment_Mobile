@@ -45,6 +45,8 @@ public interface DataService {
     @GET("v1/staff_management/staffs/get_all_staff")
     Call<DataStaff> get_all_staff(@Header("Authorization") String token);
 
+    @GET("v1/staff_management/staffs/{id}/recover_staff")
+    Call<ResponseBody> recover_staff(@Header("Authorization") String token,@Path("id") Integer id);
     @GET("v1/staff_management/staffs/{id}")
     Call<DataStaff> fetchProfile(@Path("id") Integer id,@Header("Authorization") String token);
 
@@ -154,5 +156,23 @@ public interface DataService {
     Call<DataListHasMetaResponse<DatumTemplate<PropertyHistoryAttributes>>> getAllHistoryProviding(@Header("Authorization") String token);
     @GET("v1/request_management/request_properties")
     Call<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> getAllPropertyRequest(@Header("Authorization") String token);
+    @DELETE("v1/staff_management/staffs/{id}")
+    Call<ResponseBody> deleteStaff(@Header("Authorization") String token, @Path("id") Integer id);
+    @POST("v1/staff_management/staffs/{id}/destroy_and_update_staff_boss")
+    Call<ResponseBody> destroy_and_update_staff_boss(@Header("Authorization") String token,@Body RequestBody body, @Path("id") Integer id);
+    @POST("v1/performance_management/performance_appraisal_forms/create_all_fa_forms_for_staff")
+    Call<ResponseBody> addPerformance(@Header("Authorization") String token, @Body RequestBody body);
+    @POST("v1/performance_management/performance_appraisal_forms/update_all_active_or_inactive")
+    Call<ResponseBody> endPerformance(@Header("Authorization") String token,@Body RequestBody body);
+    @GET("v1/performance_management/performance_appraisal_forms/{id}/remind_by_staff")
+    Call<ResponseBody> remindPerformance(@Header("Authorization") String token,@Path("id") Integer id);
+    @PUT("v1/performance_management/performance_appraisal_forms/{id}")
+    Call<JsonObject> savePerformanceSelfPreview(@Header("Authorization") String token, @Path("id") Integer id, @Body RequestBody body);
+    @PUT("v1/performance_management/performance_appraisal_forms/{id}")
+    Call<JsonObject> submitPerformanceSelfPreview(@Header("Authorization") String token, @Path("id") Integer id, @Body RequestBody body);
+    @GET("v1/performance_management/performance_appraisal_forms/pa_forms_by_my_reviewed")
+    Call<DataResponseList<DatumTemplate<PerformanceAttributes>>> getPaFormsByMyReviewed(@Header("Authorization") String token);
+    @GET("/v1/staff_management/staffs/{id}/permanent_destroy")
+    Call<ResponseBody>  permanceDestroy(@Header("Authorization") String token, @Path("id") Integer id);
 }
 

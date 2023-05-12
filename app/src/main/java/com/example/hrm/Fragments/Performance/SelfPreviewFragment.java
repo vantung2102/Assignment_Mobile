@@ -12,9 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hrm.Adapters.SelfPreviewViewpagerAdapter;
+import com.example.hrm.Common;
+import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
+import com.example.hrm.Response.DataResponseList;
+import com.example.hrm.Response.DatumTemplate;
+import com.example.hrm.Response.PerformanceAttributes;
+import com.example.hrm.Services.APIService;
 import com.example.hrm.databinding.FragmentSelfPreviewBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * create an instance of this fragment.
  */
 public class SelfPreviewFragment extends Fragment {
-    public  static final String MY_TAG= "Self ssssPreview";
+    public  static final String MY_TAG= "Self Preview";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,8 +78,8 @@ public class SelfPreviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding=FragmentSelfPreviewBinding.inflate(inflater);
-        SelfPreviewViewpagerAdapter adapter=new SelfPreviewViewpagerAdapter(getActivity());
-        binding.viewpager2.setAdapter(adapter);
+        getData();
+
         binding.BottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -105,4 +115,25 @@ public class SelfPreviewFragment extends Fragment {
         });
         return binding.getRoot();
     }
+    SelfPreviewViewpagerAdapter adapter;
+    public void getData() {
+
+        Call<DataResponseList<DatumTemplate<PerformanceAttributes>>> call = APIService.getService().getPaFormsByCurrentUser(Common.getToken());
+        call.enqueue(new Callback<DataResponseList<DatumTemplate<PerformanceAttributes>>>() {
+            @Override
+            public void onResponse(Call<DataResponseList<DatumTemplate<PerformanceAttributes>>> call, Response<DataResponseList<DatumTemplate<PerformanceAttributes>>> response) {
+                if(response.isSuccessful()){
+                    adapter=new SelfPreviewViewpagerAdapter(getActivity(),response.body().getData(),true,false);
+                    binding.viewpager2.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataResponseList<DatumTemplate<PerformanceAttributes>>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 }

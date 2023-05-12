@@ -26,10 +26,10 @@ public class StaffAttributes implements Serializable {
     private String address;
     @SerializedName("join_date")
     @Expose
-    private Object joinDate;
+    private String joinDate;
     @SerializedName("date_of_birth")
     @Expose
-    private Object dateOfBirth;
+    private String dateOfBirth;
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -95,19 +95,19 @@ public class StaffAttributes implements Serializable {
         this.address = address;
     }
 
-    public Object getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Object joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 
-    public Object getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Object dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

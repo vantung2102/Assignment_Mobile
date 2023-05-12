@@ -9,7 +9,27 @@ import androidx.databinding.Bindable;
 import com.example.hrm.BR;
 import com.example.hrm.Response.StaffAttributes;
 
+import java.util.Calendar;
+
 public class NewEmployeeViewModel extends BaseObservable {
+    private Calendar calendarJoinDate,calendarBirthDate;
+
+    public Calendar getCalendarJoinDate() {
+        return calendarJoinDate;
+    }
+
+    public void setCalendarJoinDate(Calendar calendarJoinDate) {
+        this.calendarJoinDate = calendarJoinDate;
+    }
+
+    public Calendar getCalendarBirthDate() {
+        return calendarBirthDate;
+    }
+
+    public void setCalendarBirthDate(Calendar calendarBirthDate) {
+        this.calendarBirthDate = calendarBirthDate;
+    }
+
     public static final int fullNameType=0,passwordType=1,emailType=2,confirmPasswordType=3,phoneType=4,dateOfBirthType=5,joinDateType=6,genderType=7,departmentType=8;
     public static final int positionType=9,jobtitleType=10,managerType=11,addressType=12;
     private String fullName="";

@@ -127,6 +127,8 @@
                         android:textSize="@dimen/nomarlText"></TextView>
 
                     <EditText
+                        android:inputType="textPassword"
+                        android:drawableEnd="@drawable/hide"
                         android:id="@+id/txt_password"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -157,6 +159,8 @@
                         android:textSize="@dimen/nomarlText"></TextView>
 
                     <EditText
+                        android:inputType="textPassword"
+                        android:drawableEnd="@drawable/hide"
                         android:id="@+id/txt_confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"

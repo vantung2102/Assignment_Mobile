@@ -108,8 +108,11 @@ public class DepartmentAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void showDelete(Attributes department,int pos) {
         AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
-        alertDialog.setTitle("Delete Department");
-        String str="Are you sure delete '"+department.getName()+"' ?";
+        alertDialog.setTitle("Delete "+type);
+        String str="";
+        if(department.getName()!=null)
+            str="Are you sure delete '"+department.getName()+"' ?";
+        else str="Are you sure delete '"+department.getTitle()+"' ?";
         alertDialog.setMessage(str);
         alertDialog.setIcon(R.drawable.deletetrash);
         alertDialog.setCancelable(true);

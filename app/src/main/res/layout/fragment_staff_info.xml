@@ -66,6 +66,8 @@
                             android:text="1"></TextView>
                     </LinearLayout>
                     <Button
+                        android:textAllCaps="false"
+                        android:id="@+id/btn_inactive"
                         android:layout_marginTop="10dp"
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
@@ -75,6 +77,19 @@
                         android:textColor="@color/white"
                         android:background="@color/inactive"
                         android:text="Inative"></Button>
+                    <Button
+                        android:visibility="gone"
+                        android:textAllCaps="false"
+                        android:id="@+id/btn_active"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"
+                        android:background="@color/toast_success"
+                        android:text="Active"></Button>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

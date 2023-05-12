@@ -81,7 +81,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.StaffViewHolde
             @Override
             public void onClick(View view) {
 //                Toast.makeText(mContext, "btnShow", Toast.LENGTH_SHORT).show();
-                    showInfo(att);
+                    showInfo(att,holder.getAdapterPosition());
             }
         });
         holder.staffItemBinding.txtIndex.setText(String.valueOf(att.getId()));
@@ -99,10 +99,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.StaffViewHolde
 //        });
     }
 
-    private void showInfo(StaffAttributes att) {
+    private void showInfo(StaffAttributes att,int pos) {
         //Toast.makeText(mContext, "showInfo", Toast.LENGTH_SHORT).show();
         homeActivity.addOrRemoveBackButton(true);
-        StaffInfoFragment staffInfoFragment=new StaffInfoFragment(att);
+        StaffInfoFragment staffInfoFragment=new StaffInfoFragment(att,pos);
         final Bundle args = new Bundle();
         args.putString("TAG", staffInfoFragment.MY_TAG);
         staffInfoFragment.setArguments(args);
@@ -148,11 +148,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.StaffViewHolde
         return 0;
     }
 
-    public void showLike(String staffName) {
+    public void showLike(String staffName,String desName,String posName,String jobName) {
         isShowCurrentList=true;
         List<DatumStaff> list=new ArrayList<>();
         this.data.forEach(item->{
-            if(item.getAttributes().getFullname().contains(staffName)){
+            if(item.getAttributes().getFullname().contains(staffName)&&item.getAttributes().getPosition().getName().contains(posName)&&item.getAttributes().getJobTitle().getTitle().contains(jobName)&&item.getAttributes().getDepartment().getName().contains(desName)){
                 list.add(item);
             }
         });
