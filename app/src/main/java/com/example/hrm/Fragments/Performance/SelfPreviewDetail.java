@@ -61,8 +61,8 @@ public class SelfPreviewDetail extends Fragment {
     public SelfPreviewDetail(PerformanceAttributes att,int pos,boolean staffEdit,boolean bossEdit) {
         this.staffEdit=staffEdit;
         this.bossEdit=bossEdit;
-    this.att=att;
-    this.pos=pos;
+        this.att=att;
+        this.pos=pos;
     }
 
     /**
@@ -139,6 +139,9 @@ public class SelfPreviewDetail extends Fragment {
 
     private void updateView() {
         if(att.getStatus().equals(Common.STATUS_COMPLETE)||(att.getStatus().equals(Common.STATUS_SELF_REVIEWED)&&bossEdit==false)||(!att.getStatus().equals(Common.STATUS_SELF_REVIEWED)&&bossEdit==true)){
+            binding.boxSubmit.setVisibility(View.GONE);
+        }
+        if(bossEdit==false&&staffEdit==false) {
             binding.boxSubmit.setVisibility(View.GONE);
         }
     }

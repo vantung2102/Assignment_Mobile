@@ -248,6 +248,12 @@ public class NewEmployeeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 staffId=staffAtts.get(i).getAttributes().getId();
+                for(int k=0;k<staffAtts.size();k++){
+                    if (staffAtts.get(k).getAttributes().getFullname().equals(fragmentNewEmployeeBinding.edtManager.getText().toString())) {
+                        staffId=staffAtts.get(k).getAttributes().getId();
+                        Log.d("staffId", String.valueOf(staffId));
+                        break;
+                    }}
             }
         });
         //
@@ -349,6 +355,9 @@ public class NewEmployeeFragment extends Fragment {
                 viewModel.setSubmited(true);
                 if(viewModel.checkAll()){
                     sendData();
+                    Log.d("isSenddata","true");
+                } else {
+                    Log.d("isSenddata","false");
                 }
             }
         });
@@ -447,10 +456,8 @@ public class NewEmployeeFragment extends Fragment {
 //            fragment.setArguments(args);
 //            ((HomeActivity)getActivity()).relaceFragment(fragment);
         } catch (JSONException e) {
-            ((HomeActivity)getActivity()).showToast(false,tag+" staff failed!");
             throw new RuntimeException(e);
         } catch (IOException e) {
-            ((HomeActivity)getActivity()).showToast(false,tag+" staff failed!");
             throw new RuntimeException(e);
         }
 

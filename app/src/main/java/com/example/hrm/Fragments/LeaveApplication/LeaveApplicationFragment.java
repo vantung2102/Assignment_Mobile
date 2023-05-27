@@ -41,6 +41,7 @@ import com.example.hrm.Response.DatumStaff;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.LeaveApplicationAttributes;
 import com.example.hrm.Response.PropertyAttributes;
+import com.example.hrm.Response.StaffAttributes;
 import com.example.hrm.Services.APIService;
 import com.example.hrm.ViewModel.LeaveAppShareViewModel;
 import com.example.hrm.ViewModel.StaffShareViewModel;
@@ -130,13 +131,27 @@ public class LeaveApplicationFragment extends Fragment {
     }
     List<LeaveApplicationAttributes> data=new ArrayList<>();
     private void getData() {
-        Call<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>> call= APIService.getService().getAllLeaveApplication(Common.getToken());
+        StaffAttributes staff = Common.getStaff();
+        Call<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>> call=null;
+        JSONObject parent=new JSONObject();
+
+        if(staff.getRoles()!=null&&staff.getRoles().size()>0&&staff.getRoles().get(0).getName().equals(Common.MANAGER)){
+            call=APIService.getService().getAllLeaveApplication(Common.getToken());
+        } else {
+            try {
+                parent.put("staff_id",staff.getId());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), parent.toString());
+            call=APIService.getService().getMyLeaveApplication(Common.getToken(),body);
+        }
+
         call.enqueue(new Callback<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>>() {
             @Override
             public void onResponse(Call<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>> call, Response<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>> response) {
 
                 DataResponseList res= response.body();
-                Log.d("onResponse","onResponse szie"+res.getData().size());
                 res.getData().forEach(item->{
                     DatumTemplate<LeaveApplicationAttributes> datumTemplate= (DatumTemplate<LeaveApplicationAttributes>) item;
                     //Log.d("StaffLeaveAttributes",s.toString());

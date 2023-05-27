@@ -19,6 +19,7 @@ import com.example.hrm.Response.DataResponse;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.LeaveApplicationAttributes;
 import com.example.hrm.Response.Staff;
+import com.example.hrm.Response.StaffAttributes;
 import com.example.hrm.Services.APIService;
 import com.example.hrm.ViewModel.LeaveAppShareViewModel;
 import com.example.hrm.ViewModel.PropertyShareViewModel;
@@ -93,6 +94,8 @@ public class DetailLeaveApplicationFragment extends Fragment {
         // Inflate the layout for this fragment\
          leaveAppShareViewModel = new ViewModelProvider(getActivity()).get(LeaveAppShareViewModel.class);
         binding=FragmentDetailLeaveApplicationBinding.inflate(inflater);
+        StaffAttributes me = Common.getStaff();
+
         binding.txtStartDate.setText(att.getStartDay());
         binding.txtEndDate.setText(att.getEndDay());
         binding.txtLeaveType.setText(att.getLeaveType());
@@ -101,19 +104,39 @@ public class DetailLeaveApplicationFragment extends Fragment {
         binding.txtRequester.setText(att.getStaff().getFullname());
         Staff staff= (Staff) att.getApprover();
         binding.txtApprover.setText(att.getApprover()==null?"None": staff.getFullname());
-        binding.btnApprove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                responseLeaveApplication(true);
+        if(me.getRoles()!=null&&me.getRoles().size()>0&&me.getRoles().get(0).getName().equals(Common.MANAGER)){
+            binding.btnApprove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    responseLeaveApplication(true);
+                }
+            });
+            binding.btnCancle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    responseLeaveApplication(false);
+                }
+            });
+            updateButton();
+        } else {
+            binding.btnCancle.setVisibility(View.GONE);
+            binding.btnApprove.setVisibility(View.GONE);
+            if(this.att.getStatus().equals(Common.STATUS_APPROVED)){
+                binding.txtStatus.setBackground(getContext().getDrawable(R.drawable.layout_rounded_border_green));
+                binding.txtStatus.setTextColor(getContext().getColor(R.color.toast_success_bold));
+                binding.txtStatus.setText(Common.STATUS_APPROVED);
             }
-        });
-        binding.btnCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                responseLeaveApplication(false);
+            else if(this.att.getStatus().equals(Common.STATUS_CANCLED)){
+                binding.txtStatus.setBackground(getContext().getDrawable(R.drawable.layout_rounded_border_red));
+                binding.txtStatus.setTextColor(getContext().getColor(R.color.toast_failed_bold));
+                binding.txtStatus.setText(Common.STATUS_CANCLED);
+            } else if(this.att.getStatus().equals(Common.STATUS_PENDING)){
+                binding.txtStatus.setBackground(getContext().getDrawable(R.drawable.layout_rounded_border_yellow));
+                binding.txtStatus.setTextColor(getContext().getColor(R.color.pending));
             }
-        });
-        updateButton();
+        }
+
+
         return binding.getRoot();
     }
 
@@ -137,6 +160,7 @@ public class DetailLeaveApplicationFragment extends Fragment {
         }
 
     }
+
 
     private void responseLeaveApplication(boolean b) {
         JSONObject parent=new JSONObject();

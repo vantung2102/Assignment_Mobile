@@ -84,6 +84,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.StaffViewHolde
                     showInfo(att,holder.getAdapterPosition());
             }
         });
+        holder.staffItemBinding.txtSub.setText(att.getJobTitle().getTitle());
         holder.staffItemBinding.txtIndex.setText(String.valueOf(att.getId()));
         holder.staffItemBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,10 +25,13 @@ import com.example.hrm.Fragments.Home.HomeActivity;
 import com.example.hrm.R;
 import com.example.hrm.Response.Attributes;
 import com.example.hrm.Response.DataListHasMetaResponse;
+import com.example.hrm.Response.DataResponseList;
 import com.example.hrm.Response.DatumStaff;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.Department;
+import com.example.hrm.Response.LeaveApplicationAttributes;
 import com.example.hrm.Response.RequestPropertyAttributes;
+import com.example.hrm.Response.StaffAttributes;
 import com.example.hrm.Services.APIService;
 import com.example.hrm.ViewModel.RequestShareViewModel;
 import com.example.hrm.ViewModel.StaffInActiveShareViewModel;
@@ -306,7 +309,22 @@ public class RequestPropertyFragment extends Fragment {
         alertDialog.show();
     }
     private void getData() {
-        Call<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> call = APIService.getService().getAllPropertyRequest(Common.getToken());
+        StaffAttributes staff = Common.getStaff();
+        Call<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> call=null;
+        JSONObject parent=new JSONObject();
+
+        if(staff.getRoles()!=null&&staff.getRoles().size()>0&&staff.getRoles().get(0).getName().equals(Common.MANAGER)){
+            call = APIService.getService().getAllPropertyRequest(Common.getToken());
+
+        } else {
+            try {
+                parent.put("staff_id",staff.getId());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), parent.toString());
+            call=APIService.getService().requests_by_user(Common.getToken(),body);
+        }
         call.enqueue(new Callback<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>>() {
             @Override
             public void onResponse(Call<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> call, Response<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> response) {

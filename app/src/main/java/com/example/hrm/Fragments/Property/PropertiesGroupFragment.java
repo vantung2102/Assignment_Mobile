@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -111,6 +112,7 @@ public class PropertiesGroupFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
         mView=inflater.inflate(R.layout.fragment_department, container, false);
         rcvDes=mView.findViewById(R.id.rcv_departments);
+        rcvDes.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         btn_add=mView.findViewById(R.id.btn_add);
         departmentAdapter=new DepartmentAdapter(Constant.PROPERTIES_GROUP_TYPE);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());

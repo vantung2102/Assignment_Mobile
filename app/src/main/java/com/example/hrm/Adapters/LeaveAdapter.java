@@ -71,6 +71,7 @@ public class LeaveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     homeActivity.relaceFragment(fragment);
                 }
             });
+            leaveViewholder.leaveItemBinding.txtTotalDay.setText(String.valueOf(att.getCasualLeave()+att.getCompassionateLeave()+att.getMarriageLeave()+att.getMaternityLeave()+att.getUnpaidLeave()+att.getPaternityLeave()));
         }
         else if(holder instanceof LoadingViewholder){
 

@@ -88,6 +88,8 @@ public interface DataService {
 
     @GET("v1/leave_management/leave_applications")
     Call<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>> getAllLeaveApplication(@Header("Authorization") String token);
+    @POST("v1/leave_management/leave_applications/leave_application_by_user")
+    Call<DataResponseList<DatumTemplate<LeaveApplicationAttributes>>> getMyLeaveApplication(@Header("Authorization") String token,@Body RequestBody body);
     @GET("v1/onboarding_management/onboarding_sample_steps")
     Call<DataResponseList<DatumTemplate<OnboardingSampleStepAtrributes>>> getAllOnboardingSampleSteps(@Header("Authorization") String token);
 
@@ -154,6 +156,8 @@ public interface DataService {
     Call<DataResponseList<DatumTemplate<PropertyHistoryAttributes>>> getPropertyHistory(@Header("Authorization") String token,@Body RequestBody body);
     @GET("v1/property_management/property_providing_histories")
     Call<DataListHasMetaResponse<DatumTemplate<PropertyHistoryAttributes>>> getAllHistoryProviding(@Header("Authorization") String token);
+    @POST("v1/request_management/request_properties/requests_by_user")
+    Call<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> requests_by_user(@Header("Authorization") String token,@Body RequestBody body);
     @GET("v1/request_management/request_properties")
     Call<DataListHasMetaResponse<DatumTemplate<RequestPropertyAttributes>>> getAllPropertyRequest(@Header("Authorization") String token);
     @DELETE("v1/staff_management/staffs/{id}")
@@ -174,5 +178,6 @@ public interface DataService {
     Call<DataResponseList<DatumTemplate<PerformanceAttributes>>> getPaFormsByMyReviewed(@Header("Authorization") String token);
     @GET("/v1/staff_management/staffs/{id}/permanent_destroy")
     Call<ResponseBody>  permanceDestroy(@Header("Authorization") String token, @Path("id") Integer id);
+
 }
 

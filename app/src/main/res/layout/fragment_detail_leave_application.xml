@@ -52,7 +52,7 @@
                 android:layout_weight="6"
                 android:id="@+id/txt_status"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/teal_200"
+                android:textColor="@color/pending"
                 android:text="@string/pending"
                 android:background="@drawable/layout_rounded_border"
                 android:layout_width="0dp"

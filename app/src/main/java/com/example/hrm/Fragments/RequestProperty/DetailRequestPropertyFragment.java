@@ -16,6 +16,7 @@ import com.example.hrm.Response.DataResponse;
 import com.example.hrm.Response.DatumTemplate;
 import com.example.hrm.Response.RequestPropertyAttributes;
 import com.example.hrm.Response.Staff;
+import com.example.hrm.Response.StaffAttributes;
 import com.example.hrm.Services.APIService;
 import com.example.hrm.ViewModel.RequestShareViewModel;
 import com.example.hrm.ViewModel.StaffShareViewModel;
@@ -96,19 +97,26 @@ public class DetailRequestPropertyFragment extends Fragment {
 
         binding.txtType.setText(att.getRequestType());
         binding.txtDetail.setText(att.getDescription());
-        binding.btnApprove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                responseRequest(true);
-            }
-        });
-        binding.btnCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                responseRequest(false);
-            }
-        });
-        updateButton();
+        StaffAttributes me = Common.getStaff();
+        if(me.getRoles()!=null&&me.getRoles().size()>0&&me.getRoles().get(0).getName().equals(Common.MANAGER)){
+            binding.btnApprove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    responseRequest(true);
+                }
+            });
+            binding.btnCancle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    responseRequest(false);
+                }
+            });
+
+        } else {
+            binding.btnCancle.setVisibility(View.GONE);
+            binding.btnApprove.setVisibility(View.GONE);
+            updateButton();
+        }
         return binding.getRoot();
     }
 

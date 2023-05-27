@@ -125,11 +125,11 @@ public class StaffFragment extends Fragment implements StaffFragmentView {
         }
         StaffShareViewModel staffShareViewModel = new ViewModelProvider(getActivity()).get(StaffShareViewModel.class);
         staffShareViewModel.getStaff().observe(getActivity(),staff -> {
-            if(staff!=null){
+            if(staff!=null&&userAdapter!=null&&users!=null){
                 users.add(0,new DatumStaff(staff));
                 userAdapter.notifyItemInserted(0);
                 ((HomeActivity)getActivity()).showToast(true,"staff success!");
-            } else  ((HomeActivity)getActivity()).showToast(false,"staff failed!");
+            }
 
 
         });

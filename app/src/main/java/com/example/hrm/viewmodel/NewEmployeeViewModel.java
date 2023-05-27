@@ -358,8 +358,8 @@ public class NewEmployeeViewModel extends BaseObservable {
         isSubmited = submited;
         check(fullNameType);
         check(emailType);
-        check(passwordType);
-        check(confirmPasswordType);
+        if(isCheckPassword) check(passwordType);
+        if(isCheckPassword) check(confirmPasswordType);
         check(phoneType);
         check(dateOfBirthType);
         check(joinDateType);
